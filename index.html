@@ -1,220 +1,503 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Zakaria - Backend Developer & Security Researcher</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        /* Custom styles for fine-tuning */
-        .glass-nav {
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(8px);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohamed Zakaria — Software Engineer & AI Systems</title>
+  <meta name="description" content="Software Engineer specializing in AI-powered backend systems, real-time applications, and cloud-native services. Based in Rwanda." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gray-900 text-white font-sans selection:bg-teal-500/30">
+<body>
 
-    <header class="glass-nav fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-bold tracking-tighter hover:text-teal-400 transition-colors">ZAKk<span class="text-teal-500">.</span></a>
-            <ul class="hidden md:flex items-center space-x-8 text-sm font-medium uppercase tracking-widest">
-                <li><a href="#projects" class="hover:text-teal-400 transition-colors">Projects</a></li>
-                <li><a href="#skills" class="hover:text-teal-400 transition-colors">Skills</a></li>
-                <li><a href="#gallery" class="hover:text-teal-400 transition-colors">Gallery</a></li>
-                <li><a href="#contact" class="hover:text-teal-400 transition-colors">Contact</a></li>
-            </ul>
-            <div class="md:hidden text-teal-400 text-xl"><i class="fas fa-bars"></i></div>
-        </nav>
-    </header>
+  <!-- ░░ NOISE OVERLAY ░░ -->
+  <div class="noise" aria-hidden="true"></div>
 
-    <main>
-        <section id="hero" class="min-h-screen flex items-center pt-20">
-            <div class="container mx-auto px-6 text-center">
-                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-teal-400 uppercase bg-teal-400/10 rounded-full">
-                    Available for Work
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-                    Backend Developer & <br><span class="text-teal-500">Security Researcher</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Hi my name is Mohamed Zakaria, I build scalable, secure systems and find vulnerabilities before they find us.
-                    Specializing in <span class="text-gray-200"> high-performance API design.</span>
-                </p>
-                <div class="flex justify-center space-x-8">
-                    <a href="https://github.com/zakk-io" class="text-gray-400 hover:text-white transition-all transform hover:scale-110"><i class="fab fa-github fa-2x"></i></a>
-                    <a href="https://www.linkedin.com/in/mohamed-zakaria-09969b2a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-gray-400 hover:text-blue-400 transition-all transform hover:scale-110"><i class="fab fa-linkedin fa-2x"></i></a>
-                    <a href="https://hackerone.com/zakk_249?type=user" class="text-gray-400 hover:text-teal-400 transition-all transform hover:scale-110"><i class="fas fa-user-secret fa-2x"></i></a>
-                </div>
-            </div>
-        </section>
+  <!-- ░░ CURSOR ░░ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
 
-        <section id="projects" class="py-24 bg-gray-800/50">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                    <div>
-                        <h2 class="text-4xl font-bold mb-2">Projects</h2>
-                        <p class="text-gray-400">A collection of my latest work in dev and research.</p>
-                    </div>
-                    <a href="https://github.com/zakk-io" class="text-teal-400 hover:underline mt-4 md:mt-0">View All GitHub Repo's →</a>
-                </div>
+  <!-- ░░ NAV ░░ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">ZAKk<span class="accent">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:mozakk.io@gmail.com" class="nav-cta">Hire Me</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                            <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/rEUlvT-xlVE?si=Ij0e6TxHiH2pC9vr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">Real-time Collaborative Code editor</h3>
-                                <span class="bg-teal-500/10 text-teal-500 text-[10px] px-2 py-1 rounded uppercase">Saas</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">The Platform features team management with  role-based access control (RBAC), and robust user authentication with JWT, including OAuth2 for Google and LinkedIn.
-Enabled real-time data streaming using WebSockets for Collaborative editing and chatting</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                            <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/vdOdpx_bYL8?si=1DyMhBwbOQyGidmC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">University QA Chatbot</h3>
-                                <span class="bg-teal-500/10 text-teal-500 text-[10px] px-2 py-1 rounded uppercase">AI</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">A RAG-powered chatbot that retrieves verified university data to provide factual, real-time answers without AI hallucinations.</p>
-                        </div>
-                    </div>
+  <!-- ░░ HERO ░░ -->
+  <section id="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge fade-in-start">
+        <span class="badge-dot"></span>
+        Available for opportunities
+      </div>
+      <h1 class="hero-name fade-in-start">
+        Mohamed<br /><span class="name-outline">Zakaria</span>
+      </h1>
+      <div class="hero-titles fade-in-start">
+        <span class="title-static">I build </span>
+        <span class="title-rotate" id="titleRotate">AI-powered systems</span>
+        <span class="title-cursor">_</span>
+      </div>
+      <p class="hero-desc fade-in-start">
+        Final-year CS student & software engineer specializing in backend architecture, RAG pipelines, and real-time systems. Based in <span class="accent">Musanze, Rwanda</span>.
+      </p>
+      <div class="hero-actions fade-in-start">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="https://github.com/zakk-io" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://zakk-io.github.io/portfolio/" target="_blank" rel="noopener" class="btn btn-ghost">Portfolio ↗</a>
+      </div>
+      <div class="hero-stats fade-in-start">
+        <div class="stat"><span class="stat-num">4+</span><span class="stat-label">AI Projects</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Building</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">Top 10</span><span class="stat-label">Code for Impact</span></div>
+      </div>
+    </div>
+    <div class="hero-terminal fade-in-start" aria-hidden="true">
+      <div class="terminal-bar">
+        <span class="t-dot red"></span>
+        <span class="t-dot yellow"></span>
+        <span class="t-dot green"></span>
+        <span class="t-title">zakk@portfolio:~</span>
+      </div>
+      <div class="terminal-body" id="terminalBody"></div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
 
-
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                            <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/9I52Dk4WwgY?si=ntKc3ONZpdubIfME" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">Solar Power Prediction Dashboard</h3>
-                                <span class="bg-amber-500/10 text-amber-500 text-[10px] px-2 py-1 rounded uppercase">Data</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">An interactive dashboard integrating NASA's POWER API and Gemini AI to analyze climate telemetry for precise weekly, monthly, and yearly solar yield forecasting.</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                            <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/IbyJgnipzLs?si=1D2wyb_Fr0lPLj6U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">AI Pull Request Bot</h3>
-                                <span class="bg-red-500/10 text-red-500 text-[10px] px-2 py-1 rounded uppercase">security</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">Automatically Detect Bugs & Issues in Your pull request code</p>
-                        </div>
-                    </div>
-
-
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                           <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/R4O3Xvihf0Q?si=hc2bc-i7npfVQuTU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">Smart Gloves</h3>
-                                <span class="bg-blue-500/10 text-blue-500 text-[10px] px-2 py-1 rounded uppercase">IOT</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">wearable smart glove designed to translate Kinyarwanda sign language gestures into hearable Kinyarwanda speech in real time</p>
-                        </div>
-                    </div>
-
-
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                           <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/i6zS3FYlD3w?si=gsEgOJ9EoVBaFLXX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">Smart Glasses</h3>
-                                <span class="bg-blue-500/10 text-blue-500 text-[10px] px-2 py-1 rounded uppercase">IOT</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">Smart Glasses designed for people with visual impairments. 
-Users simply look at an object, sign, or document, and the Smart Glasses describe it through audio feedback in Kinyarwanda</p>
-                        </div>
-                    </div>
-
-
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-2xl hover:border-teal-500/50 transition-all group">
-                        <div class="aspect-video w-full">
-                           <iframe class="w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/9vzqah7S2fk?si=S_2pqvbBWiwd3KAu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold group-hover:text-teal-400 transition-colors">kinyarwanda text to speech api</h3>
-                                <span class="bg-violet-500/10 text-violet-400 text-[10px] px-2 py-1 rounded uppercase">API</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">enhancing kinyarwanda text to speech api to be faster and easier to integrate</p>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="py-24 bg-gray-900">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-16">Technical Skills</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-                    <div class="space-y-6">
-                        <h3 class="text-teal-400 font-bold uppercase tracking-widest text-sm">Backend</h3>
-                        <ul class="space-y-4 text-gray-400">
-                            <li class="flex items-center"><i class="fab fa-python mr-3 text-xl"></i> Python / Flask</li>
-                            <li class="flex items-center"><i class="fab fa-node-js mr-3 text-xl"></i> Node.js / Express</li>
-                            <li class="flex items-center"><i class="fa-solid fa-database mr-3 text-xl"></i> MongoDB / PostgreSQL</li>
-                        </ul>
-                    </div>
-                    <div class="space-y-6">
-                        <h3 class="text-teal-400 font-bold uppercase tracking-widest text-sm">Security</h3>
-                        <ul class="space-y-4 text-gray-400">
-                            <li class="flex items-center"><i class="fas fa-shield-alt mr-3 text-xl"></i> Pentesting</li>
-                            <li class="flex items-center"><i class="fas fa-bug mr-3 text-xl"></i> Bug Hunting</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="gallery" class="py-24 bg-gray-800/30">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12">Life Beyond Code</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <img class="rounded-lg " src="imgs/1.jpeg" alt="Life Event 1">
-                    <img class="rounded-lg " src="imgs/2.jpeg" alt="Life Event 2">
-                    <img class="rounded-lg " src="imgs/3.jpeg" alt="Life Event 3">
-                    <img class="rounded-lg " src="imgs/4.jpeg" alt="Life Event 4">
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="contact" class="bg-gray-950 py-20 border-t border-gray-800">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-4">Let's Collaborate</h2>
-            <p class="text-gray-400 mb-10 max-w-lg mx-auto">Available for security consulting, backend architecture roles, or tech speaking engagements.</p>
-            <a href="mailto:moahmedzakaria.io@gmail.com" class="inline-block bg-teal-600 hover:bg-teal-500 text-white font-bold py-4 px-10 rounded-full transition-all mb-12">
-                Send a Message
-            </a>
-            <div class="flex justify-center space-x-6 mb-8 text-gray-500">
-                <a href="https://github.com/zakk-io" class="hover:text-teal-400 transition-colors"><i class="fab fa-github fa-xl"></i></a>
-                <a href="https://www.linkedin.com/in/mohamed-zakaria-09969b2a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="hover:text-teal-400 transition-colors"><i class="fab fa-linkedin fa-xl"></i></a>
-                <a href="https://hackerone.com/zakk_249?type=user" class="hover:text-teal-400 transition-colors"><i class="fas fa-user-secret  fa-xl"></i></a>
-            </div>
-            <p class="text-gray-600 text-sm italic">&copy; 2026 Mohamed Zakaria.</p>
+  <!-- ░░ ABOUT ░░ -->
+  <section id="about" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>01</span> About</div>
+      <div class="about-grid">
+        <div class="about-text">
+          <h2 class="section-title">Turning complex <em>AI ideas</em> into production systems</h2>
+          <p>I'm a final-year Computer Science student at INES-Ruhengeri with a deep focus on building AI-powered backend systems. My work sits at the intersection of backend engineering, machine learning infrastructure, and real-time systems.</p>
+          <p>I've deployed vision-language models on edge devices, built RAG pipelines that screen hundreds of CVs, and developed collaborative tools used in production — all while exploring how AI can drive impact in underserved communities.</p>
+          <div class="about-links">
+            <a href="mailto:mozakk.io@gmail.com" class="inline-link">mozakk.io@gmail.com ↗</a>
+            <a href="https://github.com/zakk-io" target="_blank" rel="noopener" class="inline-link">github.com/zakk-io ↗</a>
+          </div>
         </div>
-    </footer>
+        <div class="about-cards">
+          <div class="info-card">
+            <div class="info-icon">🎓</div>
+            <div>
+              <strong>BSc Computer Science</strong>
+              <span>INES-Ruhengeri, Rwanda</span>
+              <span class="tag">Expected Oct 2026</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📍</div>
+            <div>
+              <strong>Musanze, Rwanda</strong>
+              <span>Open to remote & on-site</span>
+              <span class="tag">Globally available</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🏆</div>
+            <div>
+              <strong>6th Place — Code for Impact 2025</strong>
+              <span>Mastery Hub Rwanda</span>
+              <span class="tag">Top 10 Startups</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🌍</div>
+            <div>
+              <strong>Languages</strong>
+              <span>Arabic (Native) · English (Professional)</span>
+              <span class="tag">French (Basic)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ░░ EXPERIENCE ░░ -->
+  <section id="experience" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>02</span> Experience</div>
+      <h2 class="section-title">Where I've <em>worked</em></h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3>Software Engineering Intern</h3>
+                <span class="timeline-company">Digital Umuganda — Kigali, Rwanda</span>
+              </div>
+              <span class="timeline-date">2024 – 2025</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Deployed vision-language AI models (VLMs) on edge devices, optimizing inference pipelines for low-resource environments</li>
+              <li>Integrated Kinyarwanda text-to-speech (TTS) systems to enhance accessibility for local language users in underserved communities</li>
+              <li>Delivered production-ready AI solutions collaborating cross-functionally with product and research teams in a fast-paced startup</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Python</span><span>Flask</span><span>FastAPI</span><span>VLMs</span><span>LLMs</span><span>Edge Deployment</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3>Speaker — Software Engineering Session</h3>
+                <span class="timeline-company">Sudanese Students Online Summit</span>
+              </div>
+              <span class="timeline-date">Feb 2026</span>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Delivered a software engineering session to an international student audience in Rwanda</li>
+              <li>Awarded an Appreciation Certificate for contribution to the summit</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Public Speaking</span><span>Software Engineering</span><span>Community</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ PROJECTS ░░ -->
+  <section id="projects" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>03</span> Projects</div>
+      <h2 class="section-title">Things I've <em>built</em></h2>
+      <p class="section-sub">A collection of AI-powered systems, real-time platforms, and assistive tools.</p>
+
+      <div class="projects-grid">
+
+        <!-- Project 1: AI Recruitment -->
+        <article class="project-card project-featured">
+          <div class="project-thumb">
+            <img
+              src="https://img.youtube.com/vi/8nf-zgekvn0/maxresdefault.jpg"
+              alt="AI-Powered Recruitment Platform demo"
+              onerror="this.src='https://img.youtube.com/vi/8nf-zgekvn0/hqdefault.jpg'"
+              loading="lazy"
+            />
+            <a href="https://www.youtube.com/watch?v=8nf-zgekvn0" target="_blank" rel="noopener" class="play-btn" aria-label="Watch demo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </a>
+            <span class="project-badge">Featured</span>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-type">AI · Backend · RAG</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3>AI-Powered Recruitment Platform</h3>
+            <p class="project-sub">RAG-Based Candidate Screening</p>
+            <p class="project-desc">End-to-end AI recruitment system with automated CV screening, candidate evaluation, and AI-generated shortlist rankings. Built a RAG pipeline using ChromaDB and Gemini API for context-aware querying across candidate documents.</p>
+            <ul class="project-highlights">
+              <li>Retrieval-Augmented Generation (RAG) pipeline for semantic CV matching</li>
+              <li>Secure multi-tenant backend with JWT auth &amp; RBAC access control</li>
+              <li>Real-time WebSocket updates for live screening results</li>
+            </ul>
+            <div class="project-tech">
+              <span>Node.js</span><span>Express.js</span><span>FastAPI</span><span>Vue.js</span><span>MongoDB</span><span>ChromaDB</span><span>Gemini API</span><span>WebSockets</span>
+            </div>
+            <div class="project-links">
+              <a href="https://www.youtube.com/watch?v=8nf-zgekvn0" target="_blank" rel="noopener" class="proj-link-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Watch Demo
+              </a>
+              <a href="https://github.com/zakk-io/Umurava-AI-Hackathon" target="_blank" rel="noopener" class="proj-link-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Source Code
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: Collaborative Editor -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img
+              src="https://img.youtube.com/vi/rEUlvT-xlVE/maxresdefault.jpg"
+              alt="Real-Time Collaborative Code Editor demo"
+              onerror="this.src='https://img.youtube.com/vi/rEUlvT-xlVE/hqdefault.jpg'"
+              loading="lazy"
+            />
+            <a href="https://youtu.be/rEUlvT-xlVE" target="_blank" rel="noopener" class="play-btn" aria-label="Watch demo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </a>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-type">Real-Time · SaaS</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3>Real-Time Collaborative Code Editor</h3>
+            <p class="project-desc">Collaborative coding environment supporting multiple concurrent users with low-latency synchronization, JWT/OAuth2 auth, and RBAC.</p>
+            <div class="project-tech">
+              <span>Node.js</span><span>Vue.js</span><span>MongoDB</span><span>WebSockets</span><span>JWT</span><span>OAuth2</span>
+            </div>
+            <div class="project-links">
+              <a href="https://youtu.be/rEUlvT-xlVE" target="_blank" rel="noopener" class="proj-link-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Watch Demo
+              </a>
+              <a href="https://github.com/zakk-io/CoddyGame-api" target="_blank" rel="noopener" class="proj-link-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Source Code
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: PR Bot -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img
+              src="https://img.youtube.com/vi/IbyJgnipzLs/maxresdefault.jpg"
+              alt="AI Pull Request Review Bot demo"
+              onerror="this.src='https://img.youtube.com/vi/IbyJgnipzLs/hqdefault.jpg'"
+              loading="lazy"
+            />
+            <a href="https://youtu.be/IbyJgnipzLs" target="_blank" rel="noopener" class="play-btn" aria-label="Watch demo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </a>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-type">DevOps · CI/CD · AI</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3>AI Pull Request Review Bot</h3>
+            <p class="project-desc">Automated PR analysis tool that detects bugs and security vulnerabilities, integrated into GitHub Actions CI/CD pipelines to improve code quality and review efficiency.</p>
+            <div class="project-tech">
+              <span>GitHub Actions</span><span>CI/CD</span><span>Python</span><span>AI Analysis</span>
+            </div>
+            <div class="project-links">
+              <a href="https://youtu.be/IbyJgnipzLs" target="_blank" rel="noopener" class="proj-link-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Watch Demo
+              </a>
+              <a href="https://github.com/zakk-io/pull_request_bot" target="_blank" rel="noopener" class="proj-link-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Source Code
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: Vision App -->
+        <article class="project-card">
+          <div class="project-thumb">
+            <img
+              src="https://img.youtube.com/vi/PjjrJgnLv74/hqdefault.jpg"
+              alt="Vision Assistive Application demo"
+              loading="lazy"
+            />
+            <a href="https://youtube.com/shorts/PjjrJgnLv74" target="_blank" rel="noopener" class="play-btn" aria-label="Watch demo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </a>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-type">Accessibility · AI · Edge</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3>Vision Assistive Application</h3>
+            <p class="project-desc">Real-time assistive app combining computer vision (VLM) and Kinyarwanda speech synthesis (TTS) for visually impaired users, optimized for edge deployment on low-resource devices.</p>
+            <div class="project-tech">
+              <span>Python</span><span>Flask</span><span>FastAPI</span><span>Vue.js</span><span>VLMs</span><span>TTS</span><span>Edge AI</span>
+            </div>
+            <div class="project-links">
+              <a href="https://youtube.com/shorts/PjjrJgnLv74" target="_blank" rel="noopener" class="proj-link-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Watch Demo
+              </a>
+              <a href="https://github.com/zakk-io/VisionTTS" target="_blank" rel="noopener" class="proj-link-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Source Code
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="projects-footer">
+        <a href="https://github.com/zakk-io" target="_blank" rel="noopener" class="btn btn-ghost">
+          View all repositories on GitHub ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ SKILLS ░░ -->
+  <section id="skills" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>04</span> Skills</div>
+      <h2 class="section-title">My <em>toolkit</em></h2>
+
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4><span class="skill-icon">⚙️</span> Languages</h4>
+          <div class="skill-pills">
+            <span>Python</span><span>JavaScript (ES6+)</span><span>Node.js</span><span>Bash/Shell</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🧩</span> Frameworks</h4>
+          <div class="skill-pills">
+            <span>Express.js</span><span>Flask</span><span>FastAPI</span><span>Vue.js</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🤖</span> AI / ML</h4>
+          <div class="skill-pills">
+            <span>LLMs</span><span>RAG Pipelines</span><span>VLMs</span><span>Prompt Engineering</span><span>OpenAI API</span><span>Gemini API</span><span>Hugging Face</span><span>ChromaDB</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🗄️</span> Databases</h4>
+          <div class="skill-pills">
+            <span>MongoDB</span><span>MySQL</span><span>ChromaDB</span><span>Vector Embeddings</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">☁️</span> Cloud & DevOps</h4>
+          <div class="skill-pills">
+            <span>AWS</span><span>GCP</span><span>Docker</span><span>GitHub Actions</span><span>CI/CD</span><span>Linux/Unix</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🔐</span> Security & Auth</h4>
+          <div class="skill-pills">
+            <span>JWT</span><span>OAuth2</span><span>RBAC</span><span>Multi-Tenant Architecture</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🏗️</span> Architecture</h4>
+          <div class="skill-pills">
+            <span>RESTful APIs</span><span>WebSockets</span><span>Microservices</span><span>System Design</span><span>Real-Time Systems</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4><span class="skill-icon">🛠️</span> Tools</h4>
+          <div class="skill-pills">
+            <span>Git</span><span>GitHub</span><span>Postman</span><span>Linux CLI</span><span>VS Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ CERTIFICATIONS ░░ -->
+  <section id="certs" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>05</span> Recognition</div>
+      <h2 class="section-title">Achievements & <em>Certifications</em></h2>
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-icon">🤗</div>
+          <div class="cert-body">
+            <span class="cert-date">April 2026</span>
+            <h4>AI Agents Fundamentals</h4>
+            <span class="cert-issuer">Hugging Face</span>
+            <p>Completed structured training on autonomous AI agent design, tool use, and multi-agent orchestration.</p>
+          </div>
+        </div>
+        <div class="cert-card cert-highlight">
+          <div class="cert-icon">🏆</div>
+          <div class="cert-body">
+            <span class="cert-date">2025</span>
+            <h4>Top 10 Startups — 6th Place</h4>
+            <span class="cert-issuer">Code for Impact 2025 · Mastery Hub Rwanda</span>
+            <p>Developed and optimized a Kinyarwanda text-to-speech system, improving performance and easing production integration.</p>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">🎤</div>
+          <div class="cert-body">
+            <span class="cert-date">Feb 2026</span>
+            <h4>Appreciation Certificate</h4>
+            <span class="cert-issuer">Sudanese Students Online Summit</span>
+            <p>Recognized for delivering a software engineering session to an international student audience in Rwanda.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ CONTACT ░░ -->
+  <section id="contact" class="section fade-in-start">
+    <div class="container">
+      <div class="section-label"><span>06</span> Contact</div>
+      <div class="contact-inner">
+        <h2 class="section-title">Let's <em>work together</em></h2>
+        <p class="contact-desc">Open to software engineering roles, AI/ML internships, research fellowships, and scholarship programs globally. Remote or on-site.</p>
+        <div class="contact-links">
+          <a href="mailto:mozakk.io@gmail.com" class="contact-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            mozakk.io@gmail.com
+          </a>
+          <a href="tel:+250798701484" class="contact-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-1.01a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +250 798 701 484
+          </a>
+          <a href="https://github.com/zakk-io" target="_blank" rel="noopener" class="contact-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/zakk-io
+          </a>
+          <a href="https://zakk-io.github.io/portfolio/" target="_blank" rel="noopener" class="contact-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Portfolio
+          </a>
+        </div>
+        <a href="mailto:mozakk.io@gmail.com" class="btn btn-primary btn-large">Send me a message →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-logo">ZAKk<span class="accent">.</span></span>
+      <span class="footer-copy">© 2026 Mohamed Zakaria. Built with care.</span>
+      <div class="footer-socials">
+        <a href="https://github.com/zakk-io" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="mailto:mozakk.io@gmail.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
