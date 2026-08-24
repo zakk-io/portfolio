@@ -125,12 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
     { type: 'cmd',  prompt: '$',  text: 'whoami' },
     { type: 'out',  cls: 'acc',   text: 'Mohamed Zakaria — Software Engineer' },
     { type: 'cmd',  prompt: '$',  text: 'cat skills.txt' },
-    { type: 'out',  cls: 'grn',   text: '→ Python, Node.js, FastAPI, Vue.js' },
-    { type: 'out',  cls: 'grn',   text: '→ LLMs, RAG, ChromaDB, Gemini API' },
-    { type: 'out',  cls: 'grn',   text: '→ AWS, GCP, Docker, GitHub Actions' },
+    { type: 'out',  cls: 'grn',   text: '→ Python, Node.js, FastAPI, Flask' },
+    { type: 'out',  cls: 'grn',   text: '→ LLMs, VLMs, LangChain, MCP' },
+    { type: 'out',  cls: 'grn',   text: '→ PostgreSQL, MongoDB, ChromaDB' },
     { type: 'cmd',  prompt: '$',  text: 'ls ./projects/' },
-    { type: 'out',  cls: '',      text: 'ai-recruitment/   collab-editor/' },
-    { type: 'out',  cls: '',      text: 'pr-review-bot/    vision-assistive/' },
+    { type: 'out',  cls: '',      text: 'odoo-ai-agent/   vision-tts/' },
+    { type: 'out',  cls: '',      text: 'ecg-classifier/  ai-recruitment/' },
     { type: 'cmd',  prompt: '$',  text: 'echo $STATUS' },
     { type: 'out',  cls: 'grn',   text: '✓ Available for opportunities' },
     { type: 'cmd',  prompt: '$',  text: '_' },
@@ -180,10 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 8. HERO TITLE ROTATOR ───────────────────────────────────────
   const titles = [
-    'AI-powered systems',
+    'AI-powered products',
     'RAG pipelines',
-    'real-time APIs',
-    'cloud-native apps',
+    'ERP AI agents',
+    'edge AI systems',
     'accessible AI tools',
   ];
   const rotateEl = document.getElementById('titleRotate');

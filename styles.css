@@ -1002,6 +1002,51 @@ footer {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+a.project-thumb-placeholder {
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  transition: color var(--transition);
+}
+a.project-thumb-placeholder:hover {
+  color: var(--accent);
+}
+
+.project-thumb--video {
+  background: #000;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.project-thumb--video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.project-featured .project-thumb--video {
+  aspect-ratio: auto;
+  min-height: 380px;
+  height: 100%;
+  align-self: stretch;
+}
+.project-card:not(.project-featured) .project-thumb--video {
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .project-featured .project-thumb--video {
+    aspect-ratio: 16 / 9;
+    min-height: 220px;
+    height: auto;
+    align-self: auto;
+  }
+}
 
 .proj-link-coming {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1013,62 +1058,6 @@ footer {
   color: var(--text-3);
   border: 1px dashed var(--border);
   cursor: default;
-}
-
-/* ─────────────────────────────────────────────────────────────────
-   LIFE BEYOND CODE — photo collage
-───────────────────────────────────────────────────────────────── */
-#life { background: var(--bg-2); }
-
-.life-collage {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
-  grid-template-rows: 260px 220px;
-  gap: 10px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.life-img {
-  overflow: hidden;
-  position: relative;
-}
-.life-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: saturate(0.85) brightness(0.9);
-  transition: transform 0.6s ease, filter 0.4s ease;
-}
-.life-img:hover img {
-  transform: scale(1.06);
-  filter: saturate(1.1) brightness(1);
-}
-
-/* tall: spans 2 rows, first column */
-.life-img--tall {
-  grid-column: 1;
-  grid-row: 1 / 3;
-}
-/* small top-right cells */
-.life-img--small {
-  grid-column: auto;
-  grid-row: 1;
-}
-/* wide: bottom spanning 2 columns */
-.life-img--wide {
-  grid-column: 2 / 4;
-  grid-row: 2;
-}
-
-@media (max-width: 700px) {
-  .life-collage {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 200px 200px;
-  }
-  .life-img--tall { grid-column: 1; grid-row: 1; }
-  .life-img--small:first-of-type { grid-column: 2; grid-row: 1; }
-  .life-img--small:last-of-type  { grid-column: 1; grid-row: 2; }
-  .life-img--wide { grid-column: 2; grid-row: 2; }
 }
 
 /* ─────────────────────────────────────────────────────────────────
