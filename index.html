@@ -474,6 +474,35 @@
     padding:0.25rem 0.55rem;
   }
 
+  .article-links{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:0.4rem 0.9rem;
+    padding-top:0.9rem;
+    border-top:1px solid var(--line);
+  }
+  .article-label{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    color:var(--ink-faint);
+    padding-top:0.2rem;
+  }
+  .article-list{
+    display:flex;
+    flex-direction:column;
+    gap:0.45rem;
+  }
+  .article-list a{
+    font-size:0.92rem;
+    font-weight:500;
+    color:var(--teal-dark);
+    line-height:1.45;
+  }
+  .article-list a:hover{ color:var(--amber-dark); }
+  .timeline .article-links{ margin-top:1rem; max-width:62ch; }
+
   .project-secondary{ margin-top:1.5rem; max-width:560px; }
 
   @media (max-width:820px){
@@ -935,7 +964,6 @@
           <div class="project-head">
             <h3>VisionTTS</h3>
             <div class="project-links">
-              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Read the blog</a>
               <a href="https://github.com/zakk-io/VisionTTS" class="icon-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 GitHub
@@ -946,6 +974,12 @@
             <dt>Problem</dt><dd>Visually impaired users need real-time understanding of their surroundings and printed text.</dd>
             <dt>Solution</dt><dd>A real-time assistive app combining a vision-language model with speech synthesis, engineered for edge deployment on low-resource, hardware-constrained devices.</dd>
           </dl>
+          <div class="article-links">
+            <span class="article-label">Article</span>
+            <div class="article-list">
+              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment →</a>
+            </div>
+          </div>
           <div class="video-embed">
             <iframe src="https://www.youtube.com/embed/PjjrJgnLv74?si=WTX_MVe2WaNV8cxO" title="VisionTTS demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
@@ -957,14 +991,17 @@
         <article class="project-card" id="project-ksl">
           <div class="project-head">
             <h3>Kinyarwanda Sign Language Recognition</h3>
-            <div class="project-links">
-              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Read the blog</a>
-            </div>
           </div>
           <dl class="project-row">
             <dt>Problem</dt><dd>Around 70,000 people in Rwanda rely on Kinyarwanda Sign Language, yet there is no public dataset, model, or tool that turns KSL signs into spoken Kinyarwanda.</dd>
             <dt>Solution</dt><dd>An edge-first pipeline that classifies signs from hand geometry alone: MediaPipe hand landmarks feed a 1,180-parameter network, quantized to a 6.9 KB TensorFlow Lite model (~98.5% validation accuracy on 10 signs, 36k self-collected samples), with Kinyarwanda speech output.</dd>
           </dl>
+          <div class="article-links">
+            <span class="article-label">Article</span>
+            <div class="article-list">
+              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda's Deaf and Non-Verbal Community →</a>
+            </div>
+          </div>
           <div class="video-embed">
             <iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
@@ -1105,7 +1142,16 @@
           <div class="project-tech">
             <span class="tech-tag">Python</span><span class="tech-tag">FastAPI</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">INT8 quantization</span><span class="tech-tag">PostgreSQL</span>
           </div>
-          <p class="project-links" style="margin-top:0.9rem;"><a href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">Read the blog: how I shrank a heartbeat classifier for tiny devices</a><a href="https://github.com/zakk-io/ECG-Classification-API">GitHub</a></p>
+          <div class="article-links">
+            <span class="article-label">Article</span>
+            <div class="article-list">
+              <a href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">How I Shrank a Heartbeat Classifier for Tiny Devices →</a>
+            </div>
+            <span class="article-label">Code</span>
+            <div class="article-list">
+              <a href="https://github.com/zakk-io/ECG-Classification-API">GitHub: ECG-Classification-API →</a>
+            </div>
+          </div>
         </li>
         <li>
           <div class="role-head">
@@ -1117,6 +1163,13 @@
             <li>Developed an AI-powered mobile app combining vision-language models, OCR, and Kinyarwanda translation/TTS for real-time scene descriptions and text reading for people with visual disabilities.</li>
             <li>Built and orchestrated the end-to-end AI pipeline on edge hardware, integrating lightweight quantized models for scene understanding, translation, and Kinyarwanda speech generation.</li>
           </ul>
+          <div class="article-links">
+            <span class="article-label">Articles</span>
+            <div class="article-list">
+              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment →</a>
+              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda's Deaf and Non-Verbal Community →</a>
+            </div>
+          </div>
         </li>
       </ol>
     </div>
