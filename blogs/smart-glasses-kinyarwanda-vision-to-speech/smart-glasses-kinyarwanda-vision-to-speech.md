@@ -250,6 +250,6 @@ Running inference on the glasses rather than on a remote server brings benefits 
 I am grateful to the team at Digital Umuganda for hosting my internship, and for their guidance and support while I built this project.
 
 
-Special thanks to my teammate Raouf Sani Mousa, my partner across this whole journey. Raouf was on our Code for Impact 2025 team, created the 3D design concepts that turned the idea of a wearable sign-to-speech translator into something you can see and hold, and built the sensor-based smart glove as their final-year project, taking this concept from the camera to the hand.
+Special thanks to my friend **Raouf Sani Mousa**, my partner across this whole journey. Raouf created the **3D designs for the smart glasses**, turning the idea of a wearable assistant that describes the world in Kinyarwanda into something you can see and hold.
 
-This work builds on openly released tools and models from Google (MediaPipe Hand Landmarker) and Meta AI (the open-source Kinyarwanda text-to-speech model). Their commitment to open AI, including for African languages, made this project possible. 
+This work builds on openly released models from **Qwen** (Qwen3-VL), **Meta AI** (NLLB-200), **mbazaNLP** (the fine-tuned and quantised English→Kinyarwanda NLLB) and **Digital Umuganda** (KinyarwandaTTS). Their commitment to open AI, including for African languages, made this project possible. 
