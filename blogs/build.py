@@ -40,8 +40,8 @@ POSTS = [
         "context": "Italy research internship · University of Parma · Erasmus+ · 2026",
         "summary": "On-device ECG classification keeps patient data local and works without internet. This post quantizes a 5,125-parameter classifier to a 9 KB INT8 model, tests it on 1,000 synthetic printed-strip images (92.7% accuracy, 17.8 ms per image on one CPU core), shows the network is under 0.2% of total latency, and uses a confidence threshold to hand uncertain beats to a clinician.",
         "tags": ["Quantization", "TensorFlow Lite", "ECG", "Edge AI"],
-        "cover": "dicovering param city.jpeg",
-        "cover_alt": "Discovering the city centre of Parma",
+        "cover": "cover.jpg",
+        "cover_alt": "Hospital patient monitor showing ECG waveforms",
         "project": ("AI Research & Engineering — University of Parma", "../../index.html#exp-parma"),
     },
 ]
