@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment — Mohamed Zakaria</title>
+<meta name="description" content="More than 158,000 Rwandans live with visual impairment, and almost no assistive tools speak Kinyarwanda. This post describes a three-model cascade (4-bit VLM, int8 NLLB-200, Kinyarwanda TTS) that turns a camera frame into speech, analyses where its 31–43 s latency goes, and sets out the research questions for running it on-device in 3D-printed smart glasses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+<div id="top"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="../../index.html" class="mark" aria-label="Home">MZ</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../../index.html#work" class="nav-optional">Work</a>
+      <a href="../index.html" aria-current="page">Writing</a>
+      <a href="../../index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main" class="article">
+  <a class="back-link" href="../index.html">← All writing</a>
+  <header class="article-head">
+    <p class="post-meta"><span class="ctx">Digital Umuganda internship · 2026</span><span>14 min read</span></p>
+    <h1>Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment</h1>
+    <div class="article-tags"><span class="tech-tag">VLM</span><span class="tech-tag">NLLB-200</span><span class="tech-tag">Kinyarwanda TTS</span><span class="tech-tag">Quantization</span><span class="tech-tag">Edge AI</span></div>
+  </header>
+
+  <details class="toc">
+    <summary>On this page · 10 sections</summary>
+    <ol>
+      <li><a href="#where-this-started-my-internship-at-digital-umuganda">Where This Started: My Internship at Digital Umuganda</a></li>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#1-motivation-why-assistive-technology-and-why-kinyarwanda">1. Motivation: Why Assistive Technology, and Why Kinyarwanda</a></li>
+      <li><a href="#2-system-overview">2. System Overview</a></li>
+      <li><a href="#3-compression-as-a-first-class-design-decision">3. Compression as a First-Class Design Decision</a></li>
+      <li><a href="#4-thinking-about-latency">4. Thinking About Latency</a></li>
+      <li><a href="#5-honest-assessment-of-the-prototype">5. Honest Assessment of the Prototype</a></li>
+      <li><a href="#6-the-future-goal-visiontts-glasses">6. The Future Goal: VisionTTS Glasses</a></li>
+      <li><a href="#7-what-this-project-taught-me">7. What This Project Taught Me</a></li>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ol>
+  </details>
+
+  <article class="prose">
+<h2 id="where-this-started-my-internship-at-digital-umuganda">Where This Started: My Internship at Digital Umuganda</h2>
+<p>From <strong>March to May 2026</strong>, I worked as a Software Engineering intern at <strong><a href="https://digitalumuganda.com">Digital Umuganda</a></strong> in Kigali, Rwanda, on-site. Digital Umuganda is a Rwandan startup building language technology and open datasets for African languages, Kinyarwanda in particular. Its open Kinyarwanda speech and translation models are a core part of this project.</p>
+<p>During those three months, I designed and built <strong>VisionTTS</strong>, an AI-powered assistive application for people with visual disabilities. It describes a scene, or reads printed text, aloud in Kinyarwanda. My work covered the whole AI pipeline:</p>
+<ul>
+<li>choosing and integrating lightweight, <strong>quantized</strong> models for scene understanding, text reading, translation and Kinyarwanda speech generation;</li>
+<li>connecting them into one end-to-end cascade from camera frame to audio;</li>
+<li>tuning that cascade so it is ready to move onto <strong>edge hardware</strong>.</li>
+</ul>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>VisionTTS is an assistive system that turns what a camera sees into spoken <strong>Kinyarwanda</strong>. It chains three pretrained models: a 4-bit quantized vision-language model (Qwen3-VL 2B), an 8-bit quantized neural machine translation model (NLLB-200 1.3B, fine-tuned for English→Kinyarwanda), and a Kinyarwanda text-to-speech model. The current prototype runs as a phone application that also acts as a stand-in for the hardware. Early informal measurements give an average end-to-end response time of <strong>31.5 s for scene description</strong> and <strong>43 s for text reading</strong>. These numbers are far from what a wearable needs.</p>
+<p>This post covers three things. First, how the pipeline is built and why each compression choice was made. Second, how I think about its latency, and where the time is likely going. Third, and most important, the research agenda for moving the system onto <strong>smart glasses</strong>: a Raspberry Pi, an ESP32 and a Pi Camera Module 3, with 3D-printed housings that are already designed. In short, the software prototype showed that the idea works, and the glasses are where the real Edge AI problems start.</p>
+<hr />
+<h2 id="1-motivation-why-assistive-technology-and-why-kinyarwanda">1. Motivation: Why Assistive Technology, and Why Kinyarwanda</h2>
+<h3 id="11-the-problem-i-set-out-to-address">1.1 The problem I set out to address</h3>
+<p>Before writing any code, I wrote a concept report on what an assistive device for Rwanda would need to do. It started from a simple observation. <strong>People with visual impairments face persistent barriers to everyday visual information</strong>: reading signs, books, menus and handwritten notes, and finding their way through unfamiliar places.</p>
+<p>This is not only an inconvenience. The information gap extends into <strong>lost education and job opportunities, and into dependence on others</strong>, even though blind and low-vision people have the skills to study and work. Very often, the barrier is access, not ability.</p>
+<p>The scale is significant. According to the <strong>Fifth Rwanda Population and Housing Census (2022)</strong>, more than <strong>158,000 people in Rwanda</strong> live with some level of visual impairment. For most of them, affordable technology in their own language does not exist. The same tools could also help a second group I had not first considered: people with <strong>reading disabilities such as dyslexia</strong>, for whom text-to-speech removes a daily obstacle.</p>
+<h3 id="12-two-gaps-at-once">1.2 Two gaps at once</h3>
+<p>A blind or low-vision person in Rwanda who mainly speaks Kinyarwanda faces two gaps at the same time:</p>
+<ol>
+<li><strong>A perception gap.</strong> They need access to visual information: signs, printed pages, the layout of a room.</li>
+<li><strong>A language gap.</strong> Most capable vision-language models reason and produce text mainly in English. Kinyarwanda is a low-resource language for almost every general-purpose model.</li>
+</ol>
+<p>When I compared existing assistive wearables in my report, the language gap was obvious:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong>VisionTTS Glasses (goal)</strong></th>
+<th>Envision Glasses</th>
+<th>OrCam MyEye Pro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kinyarwanda support</td>
+<td>✅ Kinyarwanda-first</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Price point</td>
+<td>Affordable (local design and assembly)</td>
+<td>~$599</td>
+<td>$4,000+</td>
+</tr>
+<tr>
+<td>Offline use</td>
+<td>Design goal: fully offline</td>
+<td>Partial (some features)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>(Competitor figures are as noted in my concept report. The VisionTTS column describes design targets, not a finished product.)</em></p>
+<p>Commercial devices are capable, but they are priced for high-income markets and do not speak the user's language. For a Kinyarwanda speaker, a device that reads a sign aloud in English solves only half the problem.</p>
+<h3 id="13-constraints-that-make-this-a-research-problem">1.3 Constraints that make this a research problem</h3>
+<p>My report set three requirements for the device. Each one turns into a technical constraint:</p>
+<ul>
+<li><strong>Kinyarwanda-first:</strong> every stage must end in natural Kinyarwanda speech, even though the strongest vision models "think" in English.</li>
+<li><strong>Affordable:</strong> the hardware must be cheap enough to assemble locally, which means a small single-board computer, not a GPU.</li>
+<li><strong>Offline:</strong> it must work in rural, low-connectivity areas, so the models must eventually run <em>on the device itself</em>.</li>
+</ul>
+<p>Together these change the question from "what is the best model?" to <em>"what is the best model that fits the memory, compute, energy and latency budget of a device someone can wear on their face?"</em></p>
+<p>My concept report also planned the pipeline as separate <strong>OCR</strong> and <strong>object detection</strong> models feeding a Kinyarwanda TTS. In the prototype, I replaced both with a <strong>single small vision-language model</strong> that can either describe a scene or transcribe text, depending on the prompt. This means one model to fit in memory instead of two, and richer descriptions than a list of detected objects. The structured <code>OBJECTS:</code> line in the scene prompt keeps object-level output available if the glasses need it later, for example for obstacle warnings.</p>
+<h3 id="14-why-this-matters-to-me">1.4 Why this matters to me</h3>
+<p>I care about this work because of what it could give back. My report framed the impact through two UN Sustainable Development Goals:</p>
+<ul>
+<li><strong>SDG 10 (Reduced Inequalities):</strong> giving people with visual impairments access to the same visual information as everyone else.</li>
+<li><strong>SDG 8 (Decent Work and Economic Growth):</strong> helping users study and work more independently. A locally assembled device could also create technical jobs in Rwanda: assembly technicians, engineers and the people who bring it to users.</li>
+</ul>
+<p>Working on this has convinced me that <strong>low-resource languages and assistive technology belong together.</strong> The people who would gain most from AI are often the ones whose languages AI serves least. Closing that gap, under real hardware and cost limits, is the problem I want to keep working on in graduate school.</p>
+<hr />
+<h2 id="2-system-overview">2. System Overview</h2>
+<p>The pipeline is a cascade of three models, each specialised for one modality change:</p>
+<pre><code class="language-text"> Camera frame ──► [ VLM: image → English text ] ──► [ NMT: English → Kinyarwanda ] ──► [ TTS: text → waveform ] ──► Audio
+   (RGB)          Qwen3-VL 2B, Q4_K_M               NLLB-200 1.3B, int8 (CTranslate2)    KinyarwandaTTS (female voice)
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Model</th>
+<th>Precision</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visual understanding</td>
+<td><code>qwen3-vl:2b-instruct-q4_K_M</code></td>
+<td>4-bit (k-quant, "medium")</td>
+<td>Produces a short scene description or transcribes visible text</td>
+</tr>
+<tr>
+<td>Translation</td>
+<td>NLLB-200 1.3B fine-tuned En→Kin (Education / Tourism / General domains), from mbazaNLP</td>
+<td>int8 via CTranslate2</td>
+<td>Moves the English description into Kinyarwanda</td>
+</tr>
+<tr>
+<td>Speech synthesis</td>
+<td><code>KinyarwandaTTS_female_voice</code> (Digital Umuganda), Coqui TTS with a speaker encoder and a conditioning reference clip</td>
+<td>full precision on CPU</td>
+<td>Generates the final audio</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="narrow">
+  <a href="https://drive.google.com/file/d/1VUMWHf5ebkwKBnIrmJcS-4Rb_I-e5H3_/view">
+    <img loading="lazy" src="thumbnail.png" alt="VisionTTS prototype in Scene mode, processing a captured frame of an office environment" width="280">
+  </a>
+  <figcaption>Figure 1. The phone prototype in Scene mode, processing a captured frame of an office. The phone stands in for the glasses' head-mounted camera. Click to watch the demo video.</figcaption>
+</figure>
+
+<p>The system has two operating modes, and they take different paths through the cascade:</p>
+<ul>
+<li><strong>Scene mode:</strong> VLM → NMT → TTS. The VLM describes the scene in English, and that description is translated before it is spoken.</li>
+<li><strong>Read mode:</strong> VLM → TTS. The translation stage is skipped on purpose. The VLM acts as an OCR engine, and its transcription goes straight to the Kinyarwanda TTS. This design choice assumes that printed material in the target setting is often already in Kinyarwanda. In that case, translating would be wasted computation, and it could also damage text that was already correct.</li>
+</ul>
+<p>The VLM serving code also accepts two other lightweight vision models (<code>qwen2.5vl:3b</code> and <code>moondream:v2</code>). This leaves room for the model-comparison study described in Section 6.</p>
+<hr />
+<h2 id="3-compression-as-a-first-class-design-decision">3. Compression as a First-Class Design Decision</h2>
+<p>Every model in the cascade was chosen with its memory footprint in mind. A model's weight memory is roughly its parameter count multiplied by the number of bytes used to store each weight. Lowering the precision therefore shrinks the model in direct proportion. For the 1.3B-parameter translation model:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Precision</th>
+<th>Bits / weight</th>
+<th>Approx. weight memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP32</td>
+<td>32</td>
+<td>~5.2 GB</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>16</td>
+<td>~2.6 GB</td>
+</tr>
+<tr>
+<td><strong>INT8 (used)</strong></td>
+<td><strong>8</strong></td>
+<td><strong>~1.3 GB</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>On a single-board computer with a few gigabytes of shared RAM, this is the difference between a model that cannot load and one that can. The same reasoning drives the choice of a <strong>4-bit</strong> k-quantised 2B VLM. Its weights fit in roughly the same budget as the int8 translator, while it still handles open-ended visual description.</p>
+<p><em>(These are rough estimates for the weights only. Activations, the KV cache, the vision encoder's intermediate tensors and runtime overhead all come on top. Measuring the real peak memory use on the target board is one of the first experiments planned for the hardware phase.)</em></p>
+<h3 id="31-controlling-the-visual-token-budget">3.1 Controlling the visual token budget</h3>
+<p>Inference cost in a vision-language model depends heavily on how many visual tokens the image encoder produces. The encoder cuts the image into small fixed-size patches, so the number of tokens follows the image's <em>area</em>, not its width. Doubling the width and height of an image roughly quadruples the visual tokens the model must process.</p>
+<p>The prototype uses this directly. Frames are captured at about 640×480, then downscaled on the client before inference:</p>
+<ul>
+<li><strong>Scene mode → 320 px wide.</strong> Coarse meaning, such as "a room with desks and people", survives aggressive downsampling.</li>
+<li><strong>Read mode → 480 px wide.</strong> OCR needs fine detail, so it gets a larger pixel budget. Because cost follows area, this modest increase in width means a little over twice as many visual tokens as scene mode.</li>
+</ul>
+<p>Frames are also JPEG-compressed at quality 0.5 before transmission. The context window is capped at 512 tokens, which makes the visual token budget a hard constraint rather than a soft one. Picking the resolution for each task is a small example of a broader idea: <strong>match the input fidelity to the information the task actually needs.</strong></p>
+<hr />
+<h2 id="4-thinking-about-latency">4. Thinking About Latency</h2>
+<p>The headline numbers (31.5 s for scene, 43 s for read) come from informal trials of the prototype. The number of trials and the per-stage breakdown were not recorded systematically, so I treat them as <strong>baseline indicators, not benchmark results.</strong> It still helps to think through where the time goes.</p>
+<p>In a fully <strong>sequential</strong> pipeline, every step waits for the previous one: capture the image, run the VLM, then for each sentence translate it, synthesise it and play it, before starting the next sentence.</p>
+<p>The prototype instead splits the VLM output into sentences and <strong>overlaps</strong> the later stages. While the first sentence is playing, the second is already being translated and synthesised. When this works well, the user hears one sentence after another with little or no pause between them.</p>
+<p>For an assistive device, the measure that matters most to the user is <strong>time to first audio</strong>: how long they wait between pressing the button and hearing the first word. That wait is made up of the image capture, the full VLM response, and the translation and synthesis of the first sentence only.</p>
+<p>Thinking about it this way makes three things clear:</p>
+<ol>
+<li><strong>The VLM is probably the slowest step.</strong> Read mode is slower than scene mode even though it skips translation entirely. That fits this view, because read mode uses a larger image and allows more output tokens (200 vs. 80). Timing each stage separately is needed to confirm it.</li>
+<li><strong>Streaming the VLM output would cut the wait for the first audio.</strong> Instead of waiting for the full description, the system could start translating and speaking as soon as the first sentence is generated. The codebase already includes a token-streaming path that detects sentence boundaries as they arrive and removes the model's reasoning tokens (<code>&lt;think&gt;…&lt;/think&gt;</code>) before they reach translation. The current build uses the non-streaming path. Turning on and evaluating streaming is a direct next step.</li>
+<li><strong>A short audio cue</strong> (a beep played on the phone) is played immediately on capture. It does not reduce latency. Its job is perceptual: it confirms to a user who cannot see the screen that the device heard them. The difference between <em>actual</em> waiting time and <em>perceived</em> waiting time is an important human-centred design issue for assistive AI.</li>
+</ol>
+<hr />
+<h2 id="5-honest-assessment-of-the-prototype">5. Honest Assessment of the Prototype</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Status</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scene description</td>
+<td>Working; quality self-rated ★★★★</td>
+<td>Subjective rating, no user study yet</td>
+</tr>
+<tr>
+<td>Text reading</td>
+<td>Working; self-rated ★★★</td>
+<td>Printed text only; handwriting and scene text in the wild not supported</td>
+</tr>
+<tr>
+<td>Translation domain</td>
+<td>Fine-tuned on Education / Tourism / General</td>
+<td>Domain shift: scene descriptions ("a man in a black shirt standing near chairs") are not the training distribution</td>
+</tr>
+<tr>
+<td>Compute location</td>
+<td>Models served from a separate machine</td>
+<td>Not yet on-device, so the system depends on connectivity</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td>Informal timing averages</td>
+<td>No per-stage breakdown, no variance, no standard metrics</td>
+</tr>
+</tbody>
+</table></div>
+<p>The cascade design has a structural weakness that I find scientifically interesting: <strong>errors compound.</strong> A misidentified object in the VLM output is translated and spoken with full confidence. A translation error on a domain-specific word cannot be recovered by the TTS. Quantifying how error propagates through the cascade, and whether a tighter coupling would reduce it, is an open question I would like to study formally.</p>
+<hr />
+<h2 id="6-the-future-goal-visiontts-glasses">6. The Future Goal: VisionTTS Glasses</h2>
+<p>The software and interaction design phase is finished. The next phase moves the system from a phone onto a <strong>head-worn device</strong>, where the camera shares the wearer's viewpoint and both hands stay free.</p>
+<h3 id="61-hardware-architecture-designed-not-yet-assembled">6.1 Hardware architecture (designed, not yet assembled)</h3>
+<p>The enclosures have been modelled and sliced for 3D printing:</p>
+<ul>
+<li><strong>Glasses frame</strong>: a custom printed frame that carries the camera and controller mounts.</li>
+<li><strong>Pi Camera Module 3 holder</strong>: mounted on the frame, so the optical axis follows the wearer's head direction.</li>
+<li><strong>ESP32 holder</strong>: a microcontroller on the frame, intended for low-power, always-on tasks such as handling the trigger input.</li>
+<li><strong>Raspberry Pi pocket holder</strong>: the main compute unit, worn in a pocket and tethered to the frame. This keeps weight and heat away from the face.</li>
+</ul>
+<figure>
+  <img loading="lazy" src="Screenshot_from_2026-04-16_12-37-23.png" alt="3D model of the custom VisionTTS glasses frame in the slicer" width="620">
+  <figcaption>Figure 2. The custom glasses frame, prepared for 3D printing.</figcaption>
+</figure>
+
+<div class="figure-row">
+  <figure>
+    <img loading="lazy" src="Screenshot_from_2026-04-16_12-38-18.png" alt="Raspberry Pi pocket enclosure parts">
+    <figcaption>Figure 3. Raspberry Pi pocket enclosure (main compute unit).</figcaption>
+  </figure>
+  <figure>
+    <img loading="lazy" src="Screenshot_from_2026-04-16_12-38-39.png" alt="ESP32 holder enclosures">
+    <figcaption>Figure 4. ESP32 holder variants (on-frame microcontroller).</figcaption>
+  </figure>
+  <figure>
+    <img loading="lazy" src="Screenshot_from_2026-04-16_12-39-02.png" alt="Pi Camera Module 3 holder">
+    <figcaption>Figure 5. Pi Camera Module 3 holder (head-mounted sensor).</figcaption>
+  </figure>
+</div>
+
+<p>This split, with lightweight sensing on the head and heavier compute on the body, is a common pattern in wearable systems. It frames the research problem precisely: <strong>the full model cascade must run within the memory, thermal and battery limits of a pocket-sized single-board computer.</strong></p>
+<h3 id="62-research-questions-the-glasses-introduce">6.2 Research questions the glasses introduce</h3>
+<p>Moving to the glasses turns an engineering prototype into a set of measurable Edge AI research questions:</p>
+<p><strong>RQ1: Can the full cascade fit on-device?</strong>
+Measure the peak resident memory and steady-state power of each model on the Raspberry Pi. Decide whether the three models can stay loaded together, or whether they must be swapped in and out, which adds load latency to every request.</p>
+<p><strong>RQ2: What is the accuracy–latency Pareto frontier for the vision stage?</strong>
+Benchmark the candidate VLMs already in the system (Qwen3-VL 2B, Qwen2.5-VL 3B, Moondream 2) across quantisation levels (e.g. Q4 vs. Q5 vs. Q8) and input resolutions. Plot description quality against time to first audio, and pick operating points on the frontier, not by intuition.</p>
+<p><strong>RQ3: How much does each compression step cost in quality?</strong>
+Use established metrics for each stage:
+- <strong>Translation:</strong> chrF and BLEU on held-out English→Kinyarwanda pairs that look like scene descriptions, for each beam width.
+- <strong>Reading:</strong> character and word error rate (CER / WER) on a small, purpose-built set of photographed Kinyarwanda printed pages under realistic lighting and blur.
+- <strong>Speech:</strong> intelligibility and naturalness, ideally through Mean Opinion Score (MOS) ratings from native speakers.</p>
+<p><strong>RQ4: Can the cascade be shortened?</strong>
+Translation exists only because the VLM reasons in English. Options include fine-tuning or distilling a small VLM to produce Kinyarwanda directly, or adapting the translation model to the scene-description domain. Either could reduce both latency and the compounding of errors between stages.</p>
+<h3 id="63-why-on-device-matters-beyond-latency">6.3 Why on-device matters beyond latency</h3>
+<p>Running inference on the glasses rather than on a remote server brings benefits that matter specifically for assistive technology:</p>
+<ul>
+<li><strong>Privacy.</strong> Continuous first-person camera footage of homes, documents and other people is highly sensitive. Keeping it on the device is the strongest privacy guarantee available.</li>
+<li><strong>Reliability.</strong> A device that stops working when the connection drops cannot be relied on by someone who depends on it.</li>
+<li><strong>Affordability.</strong> Avoiding per-request cloud inference costs makes long-term deployment realistic in low-resource settings.</li>
+</ul>
+<hr />
+<h2 id="7-what-this-project-taught-me">7. What This Project Taught Me</h2>
+<ul>
+<li><strong>Low-resource languages need different methods.</strong> Combining a strong English VLM with community-built Kinyarwanda translation and speech models (from mbazaNLP and Digital Umuganda) works, but it carries every limitation of a cascade. It made me think much more seriously about multilingual representation learning.</li>
+</ul>
+<hr />
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>I am grateful to the team at Digital Umuganda for hosting my internship, and for their guidance and support while I built this project.</p>
+<p>Special thanks to my teammate Raouf Sani Mousa, my partner across this whole journey. Raouf was on our Code for Impact 2025 team, created the 3D design concepts that turned the idea of a wearable sign-to-speech translator into something you can see and hold, and built the sensor-based smart glove as their final-year project, taking this concept from the camera to the hand.</p>
+<p>This work builds on openly released tools and models from Google (MediaPipe Hand Landmarker) and Meta AI (the open-source Kinyarwanda text-to-speech model). Their commitment to open AI, including for African languages, made this project possible. </p>
+  </article>
+
+  <footer class="article-foot">
+    <div class="related">
+      <div><span>Related project</span><strong>VisionTTS</strong></div>
+      <a class="read-link" href="../../index.html#project-visiontts">View on portfolio →</a>
+    </div>
+    <a class="next-post" href="../sign-to-speech-rwanda-deaf-community/index.html">
+      <span>Next post →</span>
+      <strong>Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda&#x27;s Deaf and Non-Verbal Community</strong>
+    </a>
+    <a class="to-top" href="#top">↑ Back to top</a>
+  </footer>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Mohamed Zakaria Mohamed Ahmed — Kigali, Rwanda</span>
+    <span id="year"></span>
+  </div>
+</footer>
+<script>
+  var header = document.getElementById('siteHeader');
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    if(bar){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  document.getElementById('year').textContent = '\u00a9 ' + new Date().getFullYear();
+</script>
+</body>
+</html>

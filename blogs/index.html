@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing — Mohamed Zakaria</title>
+<meta name="description" content="Long-form write-ups by Mohamed Zakaria on edge AI, quantization and Kinyarwanda language technology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="../index.html" class="mark" aria-label="Home">MZ</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../index.html#work" class="nav-optional">Work</a>
+      <a href="index.html" aria-current="page">Writing</a>
+      <a href="../index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+  
+</header>
+
+<main id="main" class="wrap">
+  <section class="page-head">
+    <p class="eyebrow">Writing</p>
+    <h1>Notes from the build</h1>
+    <p class="page-lede">Long-form write-ups of the projects behind the portfolio: what I built, how it works, what the numbers really say, and what comes next.</p>
+  </section>
+  <ul class="post-list">
+    <li class="post-item">
+      <a class="post-item-cover" href="smart-glasses-kinyarwanda-vision-to-speech/index.html" tabindex="-1" aria-hidden="true"><img src="smart-glasses-kinyarwanda-vision-to-speech/Screenshot_from_2026-04-16_12-37-23.png" alt="3D model of the VisionTTS glasses frame" loading="lazy"></a>
+      <div class="post-item-body">
+        <p class="post-meta"><span class="ctx">Digital Umuganda internship · 2026</span><span>14 min read</span></p>
+        <h2><a href="smart-glasses-kinyarwanda-vision-to-speech/index.html">Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment</a></h2>
+        <a class="read-link" href="smart-glasses-kinyarwanda-vision-to-speech/index.html">Read the post →</a>
+      </div>
+    </li>
+    <li class="post-item">
+      <a class="post-item-cover fit-contain" href="sign-to-speech-rwanda-deaf-community/index.html" tabindex="-1" aria-hidden="true"><img src="sign-to-speech-rwanda-deaf-community/cover.jpeg" alt="Illustrated hand-sign alphabet chart" loading="lazy"></a>
+      <div class="post-item-body">
+        <p class="post-meta"><span class="ctx">Digital Umuganda internship · 2026</span><span>13 min read</span></p>
+        <h2><a href="sign-to-speech-rwanda-deaf-community/index.html">Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda&#x27;s Deaf and Non-Verbal Community</a></h2>
+        <a class="read-link" href="sign-to-speech-rwanda-deaf-community/index.html">Read the post →</a>
+      </div>
+    </li>
+    <li class="post-item">
+      <a class="post-item-cover" href="shrinking-heartbeat-classifier-tiny-devices/index.html" tabindex="-1" aria-hidden="true"><img src="shrinking-heartbeat-classifier-tiny-devices/dicovering%20param%20city.jpeg" alt="Discovering the city centre of Parma" loading="lazy"></a>
+      <div class="post-item-body">
+        <p class="post-meta"><span class="ctx">Italy research internship · University of Parma · Erasmus+ · 2026</span><span>10 min read</span></p>
+        <h2><a href="shrinking-heartbeat-classifier-tiny-devices/index.html">How I Shrank a Heartbeat Classifier for Tiny Devices</a></h2>
+        <a class="read-link" href="shrinking-heartbeat-classifier-tiny-devices/index.html">Read the post →</a>
+      </div>
+    </li>
+  </ul>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Mohamed Zakaria Mohamed Ahmed — Kigali, Rwanda</span>
+    <span id="year"></span>
+  </div>
+</footer>
+<script>
+  var header = document.getElementById('siteHeader');
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    if(bar){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  document.getElementById('year').textContent = '\u00a9 ' + new Date().getFullYear();
+</script>
+</body>
+</html>

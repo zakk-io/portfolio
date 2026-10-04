@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda&#x27;s Deaf and Non-Verbal Community — Mohamed Zakaria</title>
+<meta name="description" content="About 70,000 Rwandans are deaf or speech-impaired, yet Kinyarwanda Sign Language has no public dataset or model. This post builds both: 36,373 self-collected hand-landmark samples, a position- and scale-invariant 42-feature representation, and a 1,180-parameter classifier quantized to 6.9 KB, with an honest look at why its ~98.5% validation accuracy is likely optimistic.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+<div id="top"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="../../index.html" class="mark" aria-label="Home">MZ</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../../index.html#work" class="nav-optional">Work</a>
+      <a href="../index.html" aria-current="page">Writing</a>
+      <a href="../../index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main" class="article">
+  <a class="back-link" href="../index.html">← All writing</a>
+  <header class="article-head">
+    <p class="post-meta"><span class="ctx">Digital Umuganda internship · 2026</span><span>13 min read</span></p>
+    <h1>Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda&#x27;s Deaf and Non-Verbal Community</h1>
+    <div class="article-tags"><span class="tech-tag">MediaPipe</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">TinyML</span><span class="tech-tag">Accessibility</span></div>
+  </header>
+
+  <details class="toc">
+    <summary>On this page · 12 sections</summary>
+    <ol>
+      <li><a href="#why-we-started-this">Why we Started This</a></li>
+      <li><a href="#the-core-idea">The Core Idea</a></li>
+      <li><a href="#making-the-representation-do-the-work">Making the Representation Do the Work</a></li>
+      <li><a href="#building-a-dataset-from-scratch">Building a Dataset From Scratch</a></li>
+      <li><a href="#a-deliberately-small-model">A Deliberately Small Model</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#giving-the-system-a-voice-kinyarwanda-text-to-speech">Giving the System a Voice: Kinyarwanda Text-to-Speech</a></li>
+      <li><a href="#from-camera-to-glove-how-my-friend-took-the-concept-further">From Camera to Glove: How My Friend Took the Concept Further</a></li>
+      <li><a href="#an-honest-look-at-the-limitations">An Honest Look at the Limitations</a></li>
+      <li><a href="#future-vision">Future Vision</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ol>
+  </details>
+
+  <article class="prose">
+<h2 id="why-we-started-this">Why we Started This</h2>
+<p>In Rwanda, about 70,000 people are deaf, hard of hearing, non-verbal autistic, or living with some other speech impairment. That figure comes from the Rwanda National Union of the Deaf and works out to roughly 0.5% of the population. Many of them rely on <strong>Kinyarwanda Sign Language (KSL)</strong>, but very few people around them understand it. The result is a set of everyday barriers that are easy to overlook if you have never faced them: ordering a meal without help, explaining symptoms to a doctor without risking a misdiagnosis, or simply taking part in a conversation in your own community.</p>
+<p>Sign language recognition is an active research area, but nearly all of the datasets, models, and products are built for American, British, or Chinese sign languages. For KSL there is, as far as I could find, no public dataset, no pretrained model, and no tool that turns signs into spoken <strong>Kinyarwanda</strong>. That gap is what pulled me in. I wanted to know whether a small, carefully built machine learning pipeline could recognise KSL signs reliably on cheap hardware, with no internet connection, in the conditions where it would actually be used.</p>
+<p>This project didn't start out of nowhere. It is the third stage of a line of work on Kinyarwanda language technology:</p>
+<ol>
+<li><strong>2025: the voice.</strong> With my team, I deployed Facebook's (Meta's) open-source Kinyarwanda text-to-speech model in an environment at our university, set up so that it runs fast and is easy to plug into other systems. That work placed <strong>6th in Code for Impact 2025</strong>, run by Mastery Hub Rwanda, and earned us a place among its top 10 startups.</li>
+<li><strong>2026: the eyes.</strong> During my internship at <strong>Digital Umuganda</strong> (March–May 2026, Kigali), where I worked on AI orchestration and edge computing for local-language AI, I built the sign recognition model described in this post.</li>
+<li><strong>2026: the hands.</strong> A friend took the same concept and built a sensor-based <strong>smart glove</strong> for their final-year project, which I discuss toward the end of this post.</li>
+</ol>
+<hr />
+<h2 id="the-core-idea">The Core Idea</h2>
+<p>My first instinct was to train an image classifier on webcam frames. I dropped the idea fairly quickly. An image model has to learn on its own to ignore lighting, skin tone, background clutter, clothing, and camera angle, and doing that well takes a large dataset I didn't have and a model too heavy for a low-cost wearable.</p>
+<p>So I split the problem in two:</p>
+<ol>
+<li><strong>Perception.</strong> Google's MediaPipe Hand Landmarker, a pretrained model, finds the hand in each frame and returns <strong>21 keypoints</strong>: the wrist plus four joints on each finger.</li>
+<li><strong>Interpretation.</strong> A tiny neural network that I trained myself takes only those 21 points and decides which KSL sign they form.</li>
+</ol>
+<p>The classifier never sees a pixel. It only sees the <em>geometry of the hand</em>. This design choice shaped the rest of the project, because it shifts most of the difficulty away from the model and onto how the data is represented and collected.</p>
+<pre><code>Camera frame
+   │
+   ▼
+Hand landmark detection (pretrained)  →  21 keypoints
+   │
+   ▼
+Geometric normalisation               →  42-number &quot;hand shape&quot; vector
+   │
+   ▼
+Small neural network (trained by me)  →  KSL sign
+   │
+   ▼
+Kinyarwanda word  →  speech output
+</code></pre>
+<hr />
+<h2 id="making-the-representation-do-the-work">Making the Representation Do the Work</h2>
+<p>Raw keypoint coordinates are a poor input on their own. A "Yego" (yes) sign in the top-left corner of the frame and the same sign in the bottom-right give completely different numbers, and so do a hand close to the camera and a hand far away. Instead of hoping the network would learn to ignore this, I built two invariances directly into the features:</p>
+<ul>
+<li><strong>Position invariance.</strong> Every keypoint is expressed relative to the wrist, so the wrist always sits at the origin and the hand's location in the frame stops mattering.</li>
+<li><strong>Scale invariance.</strong> The whole hand is rescaled so its largest coordinate has a fixed magnitude. A small, distant hand and a large, close hand then produce the same pattern.</li>
+</ul>
+<p>I also discarded the depth estimate, which was too noisy to help with static signs. Each frame ends up as <strong>42 numbers</strong> (21 points × 2 axes) that describe the <em>shape</em> of the hand and nothing else.</p>
+<p>The broader lesson, which I expect to carry into future work, is that <strong>encoding prior knowledge about a problem's symmetries is often cheaper and more reliable than asking a model to discover them from data.</strong> It is a small, practical version of an idea that runs through a lot of scientific machine learning.</p>
+<hr />
+<h2 id="building-a-dataset-from-scratch">Building a Dataset From Scratch</h2>
+<p>With no existing KSL dataset, I made one. I chose ten signs that cover greetings, needs, identity, and numbers, all useful in real conversations:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>KSL sign</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Amakuru</td>
+<td>How are you? / News</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Ibiryo</td>
+<td>Food</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Murakoze</td>
+<td>Thank you</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ubumuga bwo kutumva</td>
+<td>Deafness (hearing impairment)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ubumuga bwo kutavuga</td>
+<td>Speech impairment</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Yego</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Oya</td>
+<td>No</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Rimwe</td>
+<td>One</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Kabiri</td>
+<td>Two</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Gatatu</td>
+<td>Three</td>
+</tr>
+</tbody>
+</table></div>
+<p>I wrote a small logging tool that records the 42-number vector for every frame while a sign is held. To keep the model from memorising one position or distance, I followed a deliberate collection protocol for each sign. I moved the hand through all four corners and the centre of the frame, rotated the wrist, varied the distance to the camera, and recorded under different lighting conditions.</p>
+<p>The final dataset has <strong>36,373 labelled samples</strong>, with every class between 3,565 and 3,708 samples. Because the classes are so evenly balanced, overall accuracy isn't hiding poor performance on any one sign.</p>
+<hr />
+<h2 id="a-deliberately-small-model">A Deliberately Small Model</h2>
+<p>The classifier is a small multilayer perceptron: two hidden layers of 20 and 10 units, with dropout applied heavily to both the input and the hidden layer. In total it has <strong>1,180 trainable parameters</strong>.</p>
+<p>I kept it this small on purpose. The end goal is a self-contained wearable, a smart glove with its own processor and speaker, so every kilobyte and millisecond counts. After training, I converted the model to TensorFlow Lite with post-training quantisation. <strong>The deployed file is 6,912 bytes</strong>, small enough to fit many times over in the memory of a cheap microcontroller-class device.</p>
+<p>I trained on 75% of the data and validated on the remaining 25%. Early stopping watched the validation loss and rolled back to the best checkpoint, which came at epoch 132 of 152.</p>
+<hr />
+<h2 id="results">Results</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation accuracy</td>
+<td><strong>~98.5%</strong> (0.99 in the classification report)</td>
+</tr>
+<tr>
+<td>Macro-averaged F1</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>Lowest per-class F1</td>
+<td>0.96 (<em>Ubumuga bwo kutumva</em>)</td>
+</tr>
+<tr>
+<td>Classes with perfect F1 (1.00)</td>
+<td>Amakuru, Yego, Oya, Gatatu</td>
+</tr>
+<tr>
+<td>Model size (TFLite)</td>
+<td>6.9 KB</td>
+</tr>
+<tr>
+<td>Trainable parameters</td>
+<td>1,180</td>
+</tr>
+<tr>
+<td>Inference</td>
+<td>Fast enough for real-time use on a laptop CPU, with no GPU</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two observations from training were especially useful to understand.</p>
+<p><strong>Training accuracy (~89%) was lower than validation accuracy (~98%).</strong> At first this looked like a bug. It turned out to be the heavy dropout: during training the network has to classify with parts of its input and hidden layer randomly switched off, which is harder than the full-network evaluation used for validation. Working out <em>why</em> the numbers looked "backwards" taught me more about regularisation than any lecture did.</p>
+<h3 id="live-demo">Live Demo</h3>
+<p>Here is my camera-based model running in real time, from KSL sign to Kinyarwanda word to speech:</p>
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+
+<p><em>If the video doesn't load, <a href="https://www.youtube.com/watch?v=-rzLZ2ggkmw">watch it on YouTube</a>.</em></p>
+<hr />
+<h2 id="giving-the-system-a-voice-kinyarwanda-text-to-speech">Giving the System a Voice: Kinyarwanda Text-to-Speech</h2>
+<p>Recognising a sign is only half the job. For a hearing person who doesn't sign, the result has to come out as <strong>spoken Kinyarwanda</strong>. Kinyarwanda is a low-resource language, so good speech synthesis isn't something you can take for granted.</p>
+<p>Before the sign recognition work, my team and I worked on this half of the problem. We didn't build or retrain a speech model. We took the open-source Kinyarwanda text-to-speech model released by Facebook (Meta) and deployed it in an environment at our university. The work was about deployment, not model development, and we concentrated on two practical issues that keep research models out of the real world:</p>
+<ul>
+<li><strong>Speed.</strong> Speech has to follow the sign almost instantly, or the conversation stops feeling natural.</li>
+<li><strong>Ease of integration.</strong> Once the model was hosted in our university environment, any application, from a laptop prototype to a phone to a smart glove, could send it text and get Kinyarwanda speech back without setting up the model itself.</li>
+</ul>
+<p>We demonstrated the result on a smart glove use case: sign in, Kinyarwanda speech out. The project placed <strong>6th in Code for Impact 2025</strong>, organised by <strong>Mastery Hub Rwanda</strong>, and was recognised among the competition's <strong>top 10 startups</strong>.</p>
+<figure class="portrait"><img src="we%20won.jpeg" alt="Our team at Code for Impact 2025, Mastery Hub Rwanda" loading="lazy"><figcaption>Our team at Code for Impact 2025 (Mastery Hub Rwanda), where our Kinyarwanda TTS work placed 6th.</figcaption></figure>
+<hr />
+<h2 id="from-camera-to-glove-how-my-friend-took-the-concept-further">From Camera to Glove: How My Friend Took the Concept Further</h2>
+<p>The camera-based model shows that a tiny network can recognise KSL signs from hand geometry. A camera isn't always practical, though. It needs good lighting, a clear line of sight, and a device pointed at the signer. A friend of mine took the same core concept (<em>capture the hand's shape, classify it with a compact model, speak the result in Kinyarwanda</em>) and rebuilt it around wearable sensors for their final-year project.</p>
+<figure class="portrait"><img src="gloves-iot.jpg" alt="Smart glove prototype: an ESP32 microcontroller with flex sensors on each finger and an IMU" loading="lazy"><figcaption>My friend's smart glove prototype: flex sensors along each finger, an MPU6050 motion sensor, and an ESP32 microcontroller on a breadboard.</figcaption></figure>
+<p>The glove covers two of the main limitations I list below. Because the IMU records how the hand <em>moves</em>, and the GRU is built to model sequences over time, it can tell apart signs that share a hand shape but differ in motion. Because it is worn rather than filmed, it doesn't depend on lighting or camera angle.</p>
+<h3 id="grounded-in-the-community">Grounded in the community</h3>
+<p>What I admire most about the work of my friend, <strong>Raouf Sani Mousa</strong>, is its grounding in the real community:</p>
+<ul>
+<li>The training dataset was <strong>checked against the official Rwandan Sign Language Dictionary</strong> from the National Council of Persons with Disabilities (NCPD).</li>
+<li>Field testing took place <strong>at the headquarters of the Rwanda National Union of the Deaf (RNUD)</strong>, with the people the device is meant for.</li>
+<li>A survey of users and policy experts gave a <strong>90.6% technology acceptance and trust rating</strong>.</li>
+<li>The <strong>80% confidence threshold</strong> before speaking is a deliberate safety choice: in a hospital, saying nothing is better than saying the wrong word.</li>
+</ul>
+<hr />
+<h2 id="an-honest-look-at-the-limitations">An Honest Look at the Limitations</h2>
+<p>An accuracy of 98.5% sounds impressive, and I want to be careful about what it does and doesn't mean.</p>
+<ul>
+<li><strong>The validation set is probably optimistic.</strong> The samples come from continuous video, and the train/validation split is random at the frame level, so consecutive, nearly identical frames end up on both sides of the split. A stricter evaluation would hold out entire recording sessions or, better, <strong>entire signers</strong>. I expect real-world accuracy on a new user to be noticeably lower, and measuring that properly is my next priority.</li>
+<li><strong>Signer diversity is limited.</strong> Most of the data comes from a small number of people. Hand size, skin tone, motor style, and regional signing variation all matter, and the current dataset doesn't capture them well.</li>
+<li><strong>Only static signs are supported.</strong> The model looks at one frame at a time, so it can't separate signs that share a hand shape and differ only in <em>movement</em>. Much of real sign language is dynamic.</li>
+<li><strong>Only one hand is supported.</strong> Many KSL signs use both hands, and some depend on facial expression and body posture, which the system ignores completely.</li>
+<li><strong>The vocabulary is small.</strong> Ten words show the approach works, but they are a long way from a language.</li>
+</ul>
+<p>The static-only and one-hand limits were the first things I wrote down in my project notes. These limitations are the most interesting part of the project, because each one is a research question in its own right.</p>
+<hr />
+<h2 id="future-vision">Future Vision</h2>
+<p>The long-term goal is a <strong>self-contained smart glove</strong> that translates KSL into spoken Kinyarwanda in real time, entirely offline, at a price far below imported alternatives, which cost upwards of $1,000. A sign language user should be able to walk into a clinic, a shop, or a government office and be understood without needing an interpreter. Getting there involves a clear research roadmap:</p>
+<ol>
+<li><strong>From static to dynamic signs.</strong> Add temporal modelling over sequences of keypoints, using lightweight recurrent networks, temporal convolutions, or small transformers, so the system can recognise movement-based signs while still fitting on edge hardware.</li>
+<li><strong>From hands to the whole signer.</strong> Include both hands, facial landmarks, and upper-body pose, since much of the grammar and emotion in sign language lives outside the fingers.</li>
+<li><strong>From words to sentences.</strong> Move from isolated sign classification to continuous sign language recognition, where the system has to find the boundaries between signs on its own, and pair it with a Kinyarwanda language model so the output reads as natural sentences.</li>
+<li><strong>From one signer to a community dataset.</strong> Work with the Rwanda National Union of the Deaf and native KSL signers to build an open, consented, signer-diverse KSL dataset. Evaluating on held-out signers would make the accuracy figures meaningful, and the dataset would give researchers working on other low-resource sign languages a benchmark to build on.</li>
+<li><strong>Fusing camera and glove.</strong> My friend's glove has shown that flex sensors and an IMU work for KSL. The open question is how to combine sensor data with visual landmarks, and how to run temporal models like GRUs fully on microcontroller-class hardware with TinyML, while understanding the trade-offs between accuracy, latency, and power consumption.</li>
+<li><strong>Learning from little data.</strong> Investigate few-shot and self-supervised methods so new signs, or a new user's personal signing style, can be added from a handful of examples rather than thousands.</li>
+</ol>
+<hr />
+<h2 id="impact">Impact</h2>
+<p>This project sits where machine learning meets <strong>inclusion</strong>. It connects directly to two of the UN Sustainable Development Goals:</p>
+<ul>
+<li><strong>SDG 10 (Reduced Inequalities):</strong> giving people with hearing and speech impairments equal access to communication, and with it to participation in society.</li>
+<li><strong>SDG 3 (Good Health and Well-being):</strong> letting patients describe their symptoms to healthcare workers directly, which lowers the risk of misdiagnosis.</li>
+</ul>
+<p>There is a wider point too. <strong>Low-resource languages, spoken or signed, are left out of most AI progress</strong>, because the data, compute, and commercial incentives sit elsewhere. This project is a small piece of evidence that careful problem framing, domain-aware feature design, and edge-first engineering can deliver useful AI for these communities without large datasets or cloud infrastructure. The same recipe of a pretrained perception model, a lightweight task-specific model, and offline deployment could carry over to other African sign languages and to other assistive technologies.</p>
+<hr />
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to my friend <strong>Raouf Sani Mousa</strong>, my partner throughout this work. Raouf was on our Code for Impact 2025 team, <strong>designed the 3D concepts</strong> for the smart glove, and <strong>built the sensor-based glove prototype</strong> as their final-year project, taking this concept from the camera to the hand.</p>
+<p>I am grateful to <strong>Digital Umuganda</strong> for hosting my internship, for their guidance and support while I built this project, and for <strong>providing access to their Kinyarwanda text-to-speech model</strong>, which gave the system its voice.</p>
+<p>This work also builds on openly released tools from <strong>Google</strong> (MediaPipe Hand Landmarker). I am also grateful to the <strong>Rwanda National Union of the Deaf (RNUD)</strong>, whose advocacy and statistics shaped the motivation for this work.</p>
+<hr />
+<p><em>Tools (camera model): MediaPipe Hand Landmarker, TensorFlow / Keras, TensorFlow Lite, scikit-learn, OpenCV.</em>
+<em>Related work: Kinyarwanda text-to-speech deployment (Code for Impact 2025, Mastery Hub Rwanda), and a friend's sensor-based smart glove (ESP32, flex sensors, MPU6050, GRU).</em></p>
+  </article>
+
+  <footer class="article-foot">
+    <div class="related">
+      <div><span>Related project</span><strong>Kinyarwanda Sign Language Recognition</strong></div>
+      <a class="read-link" href="../../index.html#project-ksl">View on portfolio →</a>
+    </div>
+    <a class="next-post" href="../shrinking-heartbeat-classifier-tiny-devices/index.html">
+      <span>Next post →</span>
+      <strong>How I Shrank a Heartbeat Classifier for Tiny Devices</strong>
+    </a>
+    <a class="to-top" href="#top">↑ Back to top</a>
+  </footer>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Mohamed Zakaria Mohamed Ahmed — Kigali, Rwanda</span>
+    <span id="year"></span>
+  </div>
+</footer>
+<script>
+  var header = document.getElementById('siteHeader');
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    if(bar){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+  document.getElementById('year').textContent = '\u00a9 ' + new Date().getFullYear();
+</script>
+</body>
+</html>

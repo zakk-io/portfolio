@@ -480,6 +480,76 @@
     .project-grid{ grid-template-columns:1fr; }
   }
 
+  /* Writing */
+  .writing-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:1rem;
+    margin-bottom:2.25rem;
+  }
+  .writing-head h2{ margin-bottom:0; }
+  .writing-all{
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    color:var(--teal-dark);
+    border-bottom:1px solid var(--teal);
+    white-space:nowrap;
+  }
+  .writing-all:hover{ color:var(--amber-dark); border-color:var(--amber-dark); }
+  .writing-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.5rem;
+  }
+  .post-card{
+    border:1px solid var(--line);
+    background:var(--surface);
+    display:flex;
+    flex-direction:column;
+    transition:border-color 0.15s ease;
+  }
+  .post-card:hover{ border-color:var(--line-strong); }
+  .post-card:hover h3{ color:var(--teal-dark); }
+  .post-cover{
+    aspect-ratio:16/10;
+    background:var(--line);
+    overflow:hidden;
+  }
+  .post-cover img{ width:100%; height:100%; object-fit:cover; }
+  .post-cover.fit-contain{ background:#fff; }
+  .post-cover.fit-contain img{ object-fit:contain; padding:0.75rem; }
+  .post-card-body{
+    padding:1.4rem 1.5rem 1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.7rem;
+    flex:1;
+  }
+  .post-card h3{ font-size:1.05rem; line-height:1.3; transition:color 0.15s ease; }
+  .post-card p{ color:var(--ink-soft); font-size:0.9rem; }
+  .post-meta{
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    color:var(--ink-faint);
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.25rem 0.9rem;
+  }
+  .post-meta .ctx{ color:var(--teal-dark); }
+  .post-read{
+    margin-top:auto;
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--teal-dark);
+  }
+  @media (max-width:900px){
+    .writing-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:600px){
+    .writing-grid{ grid-template-columns:1fr; }
+  }
+
   /* Experience timeline */
   .timeline{
     position:relative;
@@ -695,6 +765,7 @@
     <nav id="primary-nav" class="site-nav">
       <a href="#work">Work</a>
       <a href="#experience">Experience</a>
+      <a href="#writing">Writing</a>
       <a href="#skills">Skills</a>
       <a href="#about">About</a>
       <a href="#contact" class="nav-cta">Contact</a>
@@ -860,10 +931,11 @@
           </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" id="project-visiontts">
           <div class="project-head">
             <h3>VisionTTS</h3>
             <div class="project-links">
+              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Read the blog</a>
               <a href="https://github.com/zakk-io/VisionTTS" class="icon-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 GitHub
@@ -879,6 +951,25 @@
           </div>
           <div class="project-tech">
             <span class="tech-tag">Flask</span><span class="tech-tag">VLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Edge deployment</span>
+          </div>
+        </article>
+
+        <article class="project-card" id="project-ksl">
+          <div class="project-head">
+            <h3>Kinyarwanda Sign Language Recognition</h3>
+            <div class="project-links">
+              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Read the blog</a>
+            </div>
+          </div>
+          <dl class="project-row">
+            <dt>Problem</dt><dd>Around 70,000 people in Rwanda rely on Kinyarwanda Sign Language, yet there is no public dataset, model, or tool that turns KSL signs into spoken Kinyarwanda.</dd>
+            <dt>Solution</dt><dd>An edge-first pipeline that classifies signs from hand geometry alone: MediaPipe hand landmarks feed a 1,180-parameter network, quantized to a 6.9 KB TensorFlow Lite model (~98.5% validation accuracy on 10 signs, 36k self-collected samples), with Kinyarwanda speech output.</dd>
+          </dl>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">MediaPipe</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">Keras</span><span class="tech-tag">OpenCV</span><span class="tech-tag">TinyML</span><span class="tech-tag">Edge deployment</span>
           </div>
         </article>
 
@@ -951,6 +1042,41 @@
     </div>
   </section>
 
+  <section id="writing" class="section">
+    <div class="wrap">
+      <div class="writing-head">
+        <h2>Writing</h2>
+        <a class="writing-all" href="blogs/index.html">All posts →</a>
+      </div>
+      <div class="writing-grid">
+        <a class="post-card" href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">
+          <div class="post-cover"><img src="blogs/smart-glasses-kinyarwanda-vision-to-speech/Screenshot_from_2026-04-16_12-37-23.png" alt="3D model of the VisionTTS glasses frame" loading="lazy"></div>
+          <div class="post-card-body">
+            <p class="post-meta"><span class="ctx">Digital Umuganda</span><span>14 min read</span></p>
+            <h3>Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment</h3>
+            <span class="post-read">Read the post →</span>
+          </div>
+        </a>
+        <a class="post-card" href="blogs/sign-to-speech-rwanda-deaf-community/index.html">
+          <div class="post-cover fit-contain"><img src="blogs/sign-to-speech-rwanda-deaf-community/cover.jpeg" alt="Illustrated hand-sign alphabet chart" loading="lazy"></div>
+          <div class="post-card-body">
+            <p class="post-meta"><span class="ctx">Digital Umuganda</span><span>13 min read</span></p>
+            <h3>Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda's Deaf and Non-Verbal Community</h3>
+            <span class="post-read">Read the post →</span>
+          </div>
+        </a>
+        <a class="post-card" href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">
+          <div class="post-cover"><img src="blogs/shrinking-heartbeat-classifier-tiny-devices/dicovering%20param%20city.jpeg" alt="Discovering the city centre of Parma" loading="lazy"></div>
+          <div class="post-card-body">
+            <p class="post-meta"><span class="ctx">Italy research internship</span><span>10 min read</span></p>
+            <h3>How I Shrank a Heartbeat Classifier for Tiny Devices</h3>
+            <span class="post-read">Read the post →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section id="experience" class="section">
     <div class="wrap">
       <h2>Experience</h2>
@@ -966,7 +1092,7 @@
             <li>Working with operations teams to identify business processes suited to AI-powered solutions, to improve efficiency and productivity.</li>
           </ul>
         </li>
-        <li>
+        <li id="exp-parma">
           <div class="role-head">
             <h3>AI Research &amp; Engineering Intern — <span class="role-org">University of Parma</span></h3>
             <span class="role-date">Jul — Aug 2026</span>
@@ -979,6 +1105,7 @@
           <div class="project-tech">
             <span class="tech-tag">Python</span><span class="tech-tag">FastAPI</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">INT8 quantization</span><span class="tech-tag">PostgreSQL</span>
           </div>
+          <p class="project-links" style="margin-top:0.9rem;"><a href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">Read the blog: how I shrank a heartbeat classifier for tiny devices</a><a href="https://github.com/zakk-io/ECG-Classification-API">GitHub</a></p>
         </li>
         <li>
           <div class="role-head">
