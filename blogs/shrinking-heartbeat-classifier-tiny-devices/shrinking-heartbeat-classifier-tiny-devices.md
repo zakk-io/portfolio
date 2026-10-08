@@ -4,6 +4,10 @@
 
 
 
+**Problem:** Cloud-based ECG analysis sends sensitive heart recordings off-site to a remote server, exposing patient data outside the clinic's control. It also makes every result depend on the network: each request has to travel to the server and back, and in a clinic without a reliable internet connection there may be no result at all. Running the model on the device itself avoids both problems, but edge hardware has very little memory and computing power, so the model has to be made small enough to fit without giving up too much accuracy.
+
+**Next:** Deploy the model on a microcontroller, the kind of small, low-power chip that could run inside a portable ECG device without needing a laptop, a phone or an internet connection.
+
 The work comes from my AI Research & Engineering internship at the Università degli Studi di Parma in July 2026, funded by Erasmus+. During that month I built and evaluated an ECG classification system around a quantized TensorFlow Lite model, working with researchers at the university.
 
 The model is small. It takes one heartbeat (140 samples, from the ECG5000 dataset) and puts it into one of five classes: Normal, RonTPVC, PVC, SPEB or Unclassified. It has three layers and 5,125 parameters, and the whole file is 9,104 bytes. Before the model sees anything, a separate step reads the heartbeat signal off an image of a printed ECG strip.
