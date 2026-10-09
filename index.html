@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohamed Zakaria — Software Engineer, Generative &amp; Agentic AI</title>
-<meta name="description" content="Mohamed Zakaria is a software engineer building production AI systems — conversational ERP agents, edge-deployed vision &amp; speech pipelines, and Kinyarwanda voice technology — based in Kigali, Rwanda.">
+<title>Mohamed Zakaria — Software Engineer, ERP Systems, AI Agents &amp; Automation</title>
+<meta name="description" content="Mohamed Zakaria is a software engineer working on ERP systems, AI agents and AI automation, with AI research experience in Italy and Rwanda focused on African languages and accessibility. Based in Kigali, Rwanda.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -392,6 +392,7 @@
   }
   .project-head{
     display:flex;
+    flex-wrap:wrap;
     justify-content:space-between;
     align-items:baseline;
     gap:1rem;
@@ -503,7 +504,14 @@
   .article-list a:hover{ color:var(--amber-dark); }
   .timeline .article-links{ margin-top:1rem; max-width:62ch; }
 
-  .project-secondary{ margin-top:1.5rem; max-width:560px; }
+  .role-projects{ display:grid; gap:1.5rem; margin-top:0.5rem; }
+  .role-projects.two{ grid-template-columns:1fr 1fr; }
+  .timeline .role-projects .article-links{ margin-top:0; }
+  .timeline .role-projects + .article-links{ margin-top:1.5rem; }
+  .role-points + .role-projects{ margin-top:1.25rem; }
+  @media (max-width:820px){
+    .role-projects.two{ grid-template-columns:1fr; }
+  }
 
   @media (max-width:820px){
     .project-grid{ grid-template-columns:1fr; }
@@ -585,12 +593,12 @@
     padding-left:2rem;
     border-left:1px solid var(--line-strong);
   }
-  .timeline li{
+  .timeline > li{
     position:relative;
     padding-bottom:2.75rem;
   }
-  .timeline li:last-child{ padding-bottom:0; }
-  .timeline li::before{
+  .timeline > li:last-child{ padding-bottom:0; }
+  .timeline > li::before{
     content:"";
     position:absolute;
     left:-2.42rem;
@@ -649,6 +657,7 @@
   }
   .edu-card h3{ font-size:1.1rem; margin-bottom:0.3rem; }
   .edu-org{ color:var(--teal-dark); font-weight:500; margin-bottom:0.9rem; }
+  .edu-card .role-points{ margin-bottom:1.1rem; }
   .edu-coursework{ font-size:0.88rem; color:var(--ink-soft); max-width:56ch; }
   .edu-coursework span{ color:var(--ink-faint); font-family:var(--font-mono); font-size:0.75rem; text-transform:uppercase; display:block; margin-bottom:0.4rem; }
   .edu-date{
@@ -704,7 +713,8 @@
   .contact-email:hover{ color:var(--teal-dark); border-color:var(--teal-dark); }
   .contact-links{
     display:flex;
-    gap:2rem;
+    flex-wrap:wrap;
+    gap:1rem 2rem;
   }
   .contact-links a{
     font-size:0.95rem;
@@ -740,7 +750,7 @@
   /* Gallery */
   .gallery-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:1rem;
   }
   .gallery-item{
@@ -792,11 +802,12 @@
     <a href="#top" class="mark" aria-label="Back to top">MZ</a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
     <nav id="primary-nav" class="site-nav">
-      <a href="#work">Work</a>
+      <a href="#research">Research</a>
       <a href="#experience">Experience</a>
-      <a href="#writing">Writing</a>
+      <a href="#education">Education</a>
+      <a href="#leadership">Leadership</a>
       <a href="#skills">Skills</a>
-      <a href="#about">About</a>
+      <a href="#writing">Writing</a>
       <a href="#contact" class="nav-cta">Contact</a>
     </nav>
   </div>
@@ -808,11 +819,12 @@
     <div class="hero-inner">
       <div class="hero-text">
         <p class="hero-location">Kigali, Rwanda</p>
-        <h1>Mohamed Zakaria</h1>
-        <p class="hero-role">Software Engineer — Generative &amp; Agentic AI Systems</p>
+        <h1>Mohamed Zakaria Mohamed Ahmed</h1>
+        <p class="hero-role">Software Engineer — ERP Systems, AI Agents &amp; AI Automation</p>
+        <p class="hero-lede">Software engineer working on ERP systems, AI agents and AI automation, with research experience in Italy and Rwanda, driven by a strong interest in AI research for African languages and accessibility solutions.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#work">View projects</a>
-          <a class="btn btn-outline" href="CURRICULUM VITAE (CV).pdf" download>Download CV</a>
+          <a class="btn btn-primary" href="#research">View research</a>
+          <a class="btn btn-outline" href="Mohamed_Zakaria_CV.pdf" download>Download CV</a>
         </div>
         <p class="hero-secondary"><a href="#contact">Or get in touch directly</a></p>
       </div>
@@ -858,79 +870,278 @@
 
     <dl class="stat-strip">
       <div class="stat">
-        <dt>3</dt>
-        <dd>Engineering roles across Rwanda and Italy while completing his degree</dd>
+        <dt>Italy &amp; Rwanda</dt>
+        <dd>AI research experience — University of Parma and Digital Umuganda</dd>
+      </div>
+      <div class="stat">
+        <dt>5.0/5.0</dt>
+        <dd>GPA in every semester of the final two years of my BSc</dd>
       </div>
       <div class="stat">
         <dt>Top 10</dt>
-        <dd>Nationally — Code for Impact 2025, Mastery Hub Rwanda</dd>
+        <dd>Startups (6th place) — Code for Impact 2025, Mastery Hub Rwanda</dd>
       </div>
     </dl>
   </section>
 
-  <section id="about" class="section">
+  <section id="research" class="section">
     <div class="wrap">
-      <h2>About</h2>
-      <div class="about-grid">
-        <div class="about-body">
-          <p>I'm a Software Engineer with hands-on experience designing and building AI-powered products. Proficient in Python and Node.js, with a strong foundation in RESTful API design and AI application integration. Experienced delivering solutions in fast startup environments. Seeking opportunities in Software Engineering, AI Engineering, and research or fellowship programs.</p>
+      <h2>Research experience</h2>
+      <ol class="timeline">
+        <li id="exp-parma">
+          <div class="role-head">
+            <h3>AI Research &amp; Engineering Intern (Erasmus+) — <span class="role-org">Università degli Studi di Parma</span></h3>
+            <span class="role-date">Jul — Aug 2026</span>
+          </div>
+          <p class="role-loc">Parma, Italy</p>
+          <div class="role-projects">
+            <article class="project-card" id="project-ecg">
+              <div class="project-head">
+                <h3>Evaluating a Quantized ECG Heartbeat Classifier for Edge Devices</h3>
+                <div class="project-links">
+                  <a href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg> Write-up</a>
+                  <a href="https://github.com/zakk-io/ECG-Classification-API" class="icon-link"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> Code</a>
+                </div>
+              </div>
+              <dl class="project-row">
+                <dt>Problem</dt><dd>Cloud-based ECG analysis sends sensitive heart recordings off-site to a remote server, exposing patient data outside the clinic's control.</dd>
+                <dt>Solution</dt><dd>An offline system that reads a heartbeat from a strip image and classifies it locally (~18 ms per image on one CPU core).</dd>
+                <dt>Research</dt><dd>Tested on 1,000 ECG images from the ECG5000 dataset: <strong>92.7% correct</strong>, though rare heartbeat types were often missed due to limited examples.</dd>
+                <dt>Next</dt><dd>Deploy on a microcontroller, a low-cost chip that could run inside a portable ECG device without a computer or internet.</dd>
+              </dl>
+            </article>
+          </div>
+        </li>
+        <li>
+          <div class="role-head">
+            <h3>Software Engineering Intern — <span class="role-org">Digital Umuganda</span></h3>
+            <span class="role-date">Mar — May 2026</span>
+          </div>
+          <p class="role-loc">Kigali, Rwanda</p>
+          <div class="role-projects two">
+            <article class="project-card" id="project-visiontts">
+              <div class="project-head">
+                <h3>VisionTTS: Describing Scenes Aloud in Kinyarwanda for People with Visual Impairments</h3>
+                <div class="project-links">
+                  <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg> Write-up</a>
+                  <a href="https://github.com/zakk-io/VisionTTS" class="icon-link"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> Code</a>
+                  <a href="https://youtube.com/shorts/PjjrJgnLv74?si=NTTGMFs2FZMRcIYl" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg> Demo</a>
+                </div>
+              </div>
+              <dl class="project-row">
+                <dt>Problem</dt><dd>More than 158,000 Rwandans live with a visual impairment (2022 census), and leading assistive glasses (Envision, OrCam) cost $599–$4,000+ and do not support Kinyarwanda.</dd>
+                <dt>Solution</dt><dd>A system that describes a scene or reads printed text aloud in Kinyarwanda from a camera image, built by combining three existing open AI models.</dd>
+                <dt>Research</dt><dd>Chose compressed model versions to fit a small computer's memory. The working prototype took 31.5–43 s per answer in informal tests, which is far too slow for everyday use.</dd>
+                <dt>Next</dt><dd>Move it onto low-cost smart glasses (3D parts designed, not yet built) so it works offline, make it faster, and measure its quality with standard tests.</dd>
+              </dl>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/PjjrJgnLv74?si=WTX_MVe2WaNV8cxO" title="VisionTTS demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            </article>
+
+            <article class="project-card" id="project-ksl">
+              <div class="project-head">
+                <h3>Kinyarwanda Sign Language (KSL) Gesture Recognition</h3>
+                <div class="project-links">
+                  <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg> Write-up</a>
+                  <a href="https://www.youtube.com/watch?v=-rzLZ2ggkmw" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg> Demo</a>
+                </div>
+              </div>
+              <dl class="project-row">
+                <dt>Problem</dt><dd>About 70,000 Rwandans are deaf or speech-impaired, and few people around them understand Kinyarwanda Sign Language (KSL). No public KSL dataset or tool existed.</dd>
+                <dt>Solution</dt><dd>An offline system that recognises KSL signs from a camera and speaks them in Kinyarwanda, using a tiny 6.9 KB model small enough for a low-cost wearable.</dd>
+                <dt>Research</dt><dd>Recorded 36,373 examples of 10 signs myself and trained the model on hand shape alone: <strong>~98.5% correct</strong>, likely optimistic since test and training frames came from the same recordings.</dd>
+                <dt>Next</dt><dd>Recognise signs that use movement or both hands, and fit the model into a wearable smart glove.</dd>
+              </dl>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            </article>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="wrap">
+      <h2>Work experience</h2>
+      <ol class="timeline">
+        <li>
+          <div class="role-head">
+            <h3>Software Engineer — <span class="role-org">Sokrab Group</span></h3>
+            <span class="role-date">Jul 2026 — Present</span>
+          </div>
+          <p class="role-loc">Kigali, Rwanda</p>
+          <ul class="role-points">
+            <li>Implement ERP systems for client organisations, mapping their business processes into the system.</li>
+            <li>Build AI automation workflows that reduce manual, repetitive tasks in day-to-day business operations.</li>
+            <li>Support coworkers in adopting AI tools in their daily work.</li>
+          </ul>
+          <div class="role-projects">
+            <article class="project-card" id="project-odoo-agent">
+              <div class="project-head">
+                <h3>Odoo AI Agent</h3>
+                <div class="project-links">
+                  <a href="https://youtu.be/9TT4dH_IXvw?si=Wo8Fa0UMfNHoT8x6" class="icon-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg> Demo</a>
+                </div>
+              </div>
+              <dl class="project-row">
+                <dt>Problem</dt><dd>Employees need to query and act on ERP data without learning Odoo's interface.</dd>
+                <dt>Solution</dt><dd>A conversational AI layer over Odoo with a hybrid ORM + read-only SQL architecture, letting the agent execute native Odoo actions while handling complex cross-model analytics queries in natural language.</dd>
+              </dl>
+              <div class="video-embed">
+                <iframe src="https://www.youtube.com/embed/9TT4dH_IXvw?si=Wo8Fa0UMfNHoT8x6" title="Odoo AI Agent demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">FastAPI</span><span class="tech-tag">MCP</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">LangChain</span><span class="tech-tag">Vue.js</span><span class="tech-tag">Docker</span>
+              </div>
+            </article>
+          </div>
+          <div class="article-links">
+            <span class="article-label">Demo</span>
+            <div class="article-list">
+              <a href="https://drive.google.com/file/d/10Wc29auXZUcPPLZ325033G_gP6L7EnPB/view?usp=sharing">AI automation workflow demo →</a>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="education" class="section section-tight">
+    <div class="wrap">
+      <h2>Education</h2>
+      <div class="edu-card">
+        <div>
+          <h3>BSc in Computer Science (Software Engineering)</h3>
+          <p class="edu-org">INES-Ruhengeri, Rwanda</p>
+          <ul class="role-points">
+            <li><strong>Cumulative GPA: 4.0/5.0</strong> (Upper Second Class Honours)</li>
+            <li>Earned a <strong>5.0/5.0 GPA in every semester of my final two years</strong>.</li>
+          </ul>
+          <p class="edu-coursework">
+            <span>Quantitative coursework</span>
+            Probability and Statistics (MAT 1202), Operational Research (CSC 1206), Data Mining and Data Warehousing (SWE 3408), Artificial Intelligence (SWE 3513), Physics for Engineers (PHY 1201)
+          </p>
         </div>
+        <span class="edu-date">Graduation: Oct 2026</span>
       </div>
+    </div>
+  </section>
+
+  <section id="leadership" class="section">
+    <div class="wrap">
+      <h2>Leadership &amp; community impact</h2>
+      <ol class="timeline">
+        <li>
+          <div class="role-head">
+            <h3>Team Leader — <span class="role-org">Mastery Hub Rwanda</span></h3>
+            <span class="role-date">2025</span>
+          </div>
+          <p class="role-loc">Kigali, Rwanda</p>
+          <ul class="role-points">
+            <li>Placed <strong>6th</strong> and ranked among the <strong>Top 10 startups</strong> at Code for Impact 2025 by Mastery Hub Rwanda for making Kinyarwanda speech technology easier to use. We deployed Meta's open-source Kinyarwanda text-to-speech model as a fast service any application could call, and demonstrated it in a smart glove that turns sign language into speech.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="role-head">
+            <h3>Volunteer — <span class="role-org">Rural Social Industrial Complexes (RSIC)</span></h3>
+            <span class="role-date">Aug 2026 — Present</span>
+          </div>
+          <p class="role-loc">Sudan</p>
+          <ul class="role-points">
+            <li>Software Engineer Volunteer: lead a team of 3 volunteers bringing AI to a Sudanese non-profit initiative that supports rural communities through local industry and social development.</li>
+            <li>Built the organisation's first <strong>retrieval-augmented generation (RAG)</strong> chatbot, which answers visitors' questions using its own documents.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="role-head">
+            <h3>Workshop Speaker — <span class="role-org">Sudanese Youth Club (SYC)</span></h3>
+            <span class="role-date">Jul 2026</span>
+          </div>
+          <ul class="role-points">
+            <li>Made Generative AI and AI agents approachable for high school students, and gave them practical first steps to start learning AI early.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="role-head">
+            <h3>Workshop Speaker — <span class="role-org">Nile Tech Community, Kigali Independent University (ULK)</span></h3>
+            <span class="role-date">2026</span>
+          </div>
+          <p class="role-loc">Kigali, Rwanda</p>
+          <ul class="role-points">
+            <li>Shared my own path from university student to working software engineer in Rwanda with first-year and graduating Computer Science students, and encouraged them to build projects and start their careers early.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="role-head">
+            <h3>Workshop Speaker — <span class="role-org">Sudanese Students Online Summit (SSOS)</span></h3>
+            <span class="role-date">Mar &amp; Aug 2026</span>
+          </div>
+          <ul class="role-points">
+            <li>Led two sessions for Sudanese students: one mapping software engineering career paths (Backend, Data, Mobile, Cybersecurity) and one on securing internships, scholarships and international opportunities. Received a certificate of appreciation.</li>
+          </ul>
+        </li>
+      </ol>
     </div>
   </section>
 
   <section id="skills" class="section">
     <div class="wrap">
-      <h2>Skills &amp; stack</h2>
+      <h2>Technical skills</h2>
       <div class="skills-grid">
         <div class="skill-group">
-          <h3>Languages</h3>
-          <ul class="chip-list">
-            <li class="chip">Python</li>
-            <li class="chip">Node.js</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>AI &amp; ML</h3>
+          <h3>Generative AI</h3>
           <ul class="chip-list">
             <li class="chip">LLMs</li>
             <li class="chip">Vision-Language Models</li>
+            <li class="chip">RAG</li>
+            <li class="chip">LangChain</li>
+            <li class="chip">Model Context Protocol (MCP)</li>
             <li class="chip">OpenAI Agents SDK</li>
             <li class="chip">Google ADK</li>
-            <li class="chip">LangChain</li>
+            <li class="chip">Gemini API</li>
           </ul>
         </div>
         <div class="skill-group">
-          <h3>Frameworks</h3>
+          <h3>Programming</h3>
           <ul class="chip-list">
+            <li class="chip">Python (main language)</li>
+            <li class="chip">JavaScript (Node.js)</li>
+            <li class="chip">SQL</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Backend &amp; APIs</h3>
+          <ul class="chip-list">
+            <li class="chip">RESTful API design</li>
             <li class="chip">FastAPI</li>
             <li class="chip">Flask</li>
             <li class="chip">Express.js</li>
-            <li class="chip">Vue.js</li>
+            <li class="chip">WebSockets</li>
           </ul>
         </div>
         <div class="skill-group">
-          <h3>Data &amp; storage</h3>
+          <h3>Databases</h3>
           <ul class="chip-list">
             <li class="chip">PostgreSQL</li>
             <li class="chip">MongoDB</li>
-            <li class="chip">ChromaDB (vector)</li>
+            <li class="chip">ChromaDB (vector database)</li>
           </ul>
         </div>
         <div class="skill-group">
-          <h3>Security &amp; auth</h3>
+          <h3>ERP &amp; automation</h3>
           <ul class="chip-list">
-            <li class="chip">JWT</li>
-            <li class="chip">OAuth2</li>
-            <li class="chip">RBAC</li>
-            <li class="chip">OWASP Top 10</li>
+            <li class="chip">Odoo</li>
+            <li class="chip">AI workflow automation</li>
           </ul>
         </div>
         <div class="skill-group">
           <h3>Tools</h3>
           <ul class="chip-list">
             <li class="chip">Git</li>
-            <li class="chip">GitHub</li>
+            <li class="chip">GitHub Actions (CI/CD)</li>
             <li class="chip">Docker</li>
             <li class="chip">Postman</li>
           </ul>
@@ -939,153 +1150,21 @@
     </div>
   </section>
 
-  <section id="work" class="section">
-    <div class="wrap">
-      <h2>Selected work</h2>
-      <div class="project-grid">
-
-        <article class="project-card">
-          <div class="project-head">
-            <h3>Odoo AI Agent</h3>
-          </div>
-          <dl class="project-row">
-            <dt>Problem</dt><dd>Employees need to query and act on ERP data without learning Odoo's interface.</dd>
-            <dt>Solution</dt><dd>A conversational AI layer over Odoo with a hybrid ORM + read-only SQL architecture, letting the agent execute native Odoo actions while handling complex cross-model analytics queries in natural language.</dd>
-          </dl>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/9TT4dH_IXvw?si=fUGaPd4lObEoG0dS" title="Odoo AI Agent demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">FastAPI</span><span class="tech-tag">MCP</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">LangChain</span><span class="tech-tag">Vue.js</span><span class="tech-tag">Docker</span>
-          </div>
-        </article>
-
-        <article class="project-card" id="project-visiontts">
-          <div class="project-head">
-            <h3>VisionTTS</h3>
-            <div class="project-links">
-              <a href="https://github.com/zakk-io/VisionTTS" class="icon-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-          <dl class="project-row">
-            <dt>Problem</dt><dd>Visually impaired users need real-time understanding of their surroundings and printed text.</dd>
-            <dt>Solution</dt><dd>A real-time assistive app combining a vision-language model with speech synthesis, engineered for edge deployment on low-resource, hardware-constrained devices.</dd>
-          </dl>
-          <div class="article-links">
-            <span class="article-label">Article</span>
-            <div class="article-list">
-              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment →</a>
-            </div>
-          </div>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/PjjrJgnLv74?si=WTX_MVe2WaNV8cxO" title="VisionTTS demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">Flask</span><span class="tech-tag">VLM</span><span class="tech-tag">LLM</span><span class="tech-tag">Edge deployment</span>
-          </div>
-        </article>
-
-        <article class="project-card" id="project-ksl">
-          <div class="project-head">
-            <h3>Kinyarwanda Sign Language Recognition</h3>
-          </div>
-          <dl class="project-row">
-            <dt>Problem</dt><dd>Around 70,000 people in Rwanda rely on Kinyarwanda Sign Language, yet there is no public dataset, model, or tool that turns KSL signs into spoken Kinyarwanda.</dd>
-            <dt>Solution</dt><dd>An edge-first pipeline that classifies signs from hand geometry alone: MediaPipe hand landmarks feed a 1,180-parameter network, quantized to a 6.9 KB TensorFlow Lite model (~98.5% validation accuracy on 10 signs, 36k self-collected samples), with Kinyarwanda speech output.</dd>
-          </dl>
-          <div class="article-links">
-            <span class="article-label">Article</span>
-            <div class="article-list">
-              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda's Deaf and Non-Verbal Community →</a>
-            </div>
-          </div>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">MediaPipe</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">Keras</span><span class="tech-tag">OpenCV</span><span class="tech-tag">TinyML</span><span class="tech-tag">Edge deployment</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-head">
-            <h3>AI Recruitment Platform</h3>
-            <div class="project-links">
-              <a href="https://github.com/zakk-io/Umurava-AI-Hackathon" class="icon-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-          <dl class="project-row">
-            <dt>Problem</dt><dd>Manual CV screening doesn't scale, and candidate documents are hard to query contextually.</dd>
-            <dt>Solution</dt><dd>An end-to-end recruitment system with automated CV screening and AI-generated shortlist rankings, built on a RAG pipeline (ChromaDB + Gemini API) for context-aware querying across candidate documents.</dd>
-          </dl>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/8nf-zgekvn0?si=lgz2tWc-KYyXhHUQ" title="AI-Powered Recruitment Platform demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">Node.js</span><span class="tech-tag">FastAPI</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Gemini API</span><span class="tech-tag">WebSockets</span><span class="tech-tag">MongoDB</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-head">
-            <h3>AI Pull Request Review Bot</h3>
-            <div class="project-links">
-              <a href="https://github.com/zakk-io/pull_request_bot" class="icon-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-          <dl class="project-row">
-            <dt>Problem</dt><dd>Manual code review slows CI/CD pipelines and can miss security issues.</dd>
-            <dt>Solution</dt><dd>An automated review bot that runs static bug detection and security-vulnerability analysis on pull requests, integrated directly into GitHub Actions pipelines.</dd>
-          </dl>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/IbyJgnipzLs?si=ofpWnopVOgjvKg1f" title="AI Pull Request Bot: Automatically Detect Bugs &amp; Issues in Your Code!" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">GitHub Actions</span><span class="tech-tag">CI/CD</span><span class="tech-tag">GitHub API</span><span class="tech-tag">Gemini API</span>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="project-secondary">
-        <article class="project-card compact">
-          <div class="project-head">
-            <h3>Real-Time Collaborative Code Editor</h3>
-            <div class="project-links">
-              <a href="https://github.com/zakk-io/CoddyGame-api" class="icon-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-          <p class="project-desc">Real-time collaborative coding environment for multiple concurrent users, with JWT/OAuth2 authentication and role-based access control for session and permission management.</p>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/rEUlvT-xlVE?si=_oDjb65igZZSeKiy" title="Real-Time Collaborative Code Editor demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-          <div class="project-tech">
-            <span class="tech-tag">Node.js</span><span class="tech-tag">Vue.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">WebSockets</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <section id="writing" class="section">
     <div class="wrap">
       <div class="writing-head">
-        <h2>Writing</h2>
+        <h2>My articles</h2>
         <a class="writing-all" href="blogs/index.html">All posts →</a>
       </div>
       <div class="writing-grid">
+        <a class="post-card" href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">
+          <div class="post-cover"><img src="blogs/shrinking-heartbeat-classifier-tiny-devices/cover.jpg" alt="Hospital patient monitor showing ECG waveforms" loading="lazy"></div>
+          <div class="post-card-body">
+            <p class="post-meta"><span class="ctx">University of Parma</span><span>10 min read</span></p>
+            <h3>How I Shrank a Heartbeat Classifier for Tiny Devices</h3>
+            <span class="post-read">Read the post →</span>
+          </div>
+        </a>
         <a class="post-card" href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">
           <div class="post-cover"><img src="blogs/smart-glasses-kinyarwanda-vision-to-speech/Screenshot_from_2026-04-16_12-37-23.png" alt="3D model of the VisionTTS glasses frame" loading="lazy"></div>
           <div class="post-card-body">
@@ -1102,146 +1181,7 @@
             <span class="post-read">Read the post →</span>
           </div>
         </a>
-        <a class="post-card" href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">
-          <div class="post-cover"><img src="blogs/shrinking-heartbeat-classifier-tiny-devices/cover.jpg" alt="Hospital patient monitor showing ECG waveforms" loading="lazy"></div>
-          <div class="post-card-body">
-            <p class="post-meta"><span class="ctx">Italy research internship</span><span>10 min read</span></p>
-            <h3>How I Shrank a Heartbeat Classifier for Tiny Devices</h3>
-            <span class="post-read">Read the post →</span>
-          </div>
-        </a>
       </div>
-    </div>
-  </section>
-
-  <section id="experience" class="section">
-    <div class="wrap">
-      <h2>Experience</h2>
-      <ol class="timeline">
-        <li>
-          <div class="role-head">
-            <h3>Software Engineer — <span class="role-org">Sokrab Group</span></h3>
-            <span class="role-date">Jul 2026 — Present</span>
-          </div>
-          <p class="role-loc">Kigali, Rwanda</p>
-          <ul class="role-points">
-            <li>Developing an AI-powered ERP agent that lets employees interact with company ERP systems using natural language.</li>
-            <li>Working with operations teams to identify business processes suited to AI-powered solutions, to improve efficiency and productivity.</li>
-          </ul>
-        </li>
-        <li id="exp-parma">
-          <div class="role-head">
-            <h3>AI Research &amp; Engineering Intern — <span class="role-org">University of Parma</span></h3>
-            <span class="role-date">Jul — Aug 2026</span>
-          </div>
-          <p class="role-loc">Parma, Italy</p>
-          <ul class="role-points">
-            <li>Developed and evaluated an ECG classification API using a quantized TensorFlow Lite model — 92.7% accuracy on 1,000 test samples, ~18ms single-image inference latency.</li>
-            <li>Contributed to research under the Erasmus+ program, working with researchers and gaining hands-on experience with AI model development and solar-energy systems.</li>
-          </ul>
-          <div class="project-tech">
-            <span class="tech-tag">Python</span><span class="tech-tag">FastAPI</span><span class="tech-tag">TensorFlow Lite</span><span class="tech-tag">INT8 quantization</span><span class="tech-tag">PostgreSQL</span>
-          </div>
-          <div class="article-links">
-            <span class="article-label">Article</span>
-            <div class="article-list">
-              <a href="blogs/shrinking-heartbeat-classifier-tiny-devices/index.html">How I Shrank a Heartbeat Classifier for Tiny Devices →</a>
-            </div>
-            <span class="article-label">Code</span>
-            <div class="article-list">
-              <a href="https://github.com/zakk-io/ECG-Classification-API">GitHub: ECG-Classification-API →</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="role-head">
-            <h3>Software Engineer Intern — <span class="role-org">Digital Umuganda</span></h3>
-            <span class="role-date">Mar — May 2026</span>
-          </div>
-          <p class="role-loc">Kigali, Rwanda</p>
-          <ul class="role-points">
-            <li>Developed an AI-powered mobile app combining vision-language models, OCR, and Kinyarwanda translation/TTS for real-time scene descriptions and text reading for people with visual disabilities.</li>
-            <li>Built and orchestrated the end-to-end AI pipeline on edge hardware, integrating lightweight quantized models for scene understanding, translation, and Kinyarwanda speech generation.</li>
-          </ul>
-          <div class="article-links">
-            <span class="article-label">Articles</span>
-            <div class="article-list">
-              <a href="blogs/smart-glasses-kinyarwanda-vision-to-speech/index.html">Toward Smart Glasses That Describe the World in Kinyarwanda: A Quantized Vision-to-Speech Cascade for Visual Impairment →</a>
-              <a href="blogs/sign-to-speech-rwanda-deaf-community/index.html">Closing the Communication Gap: First Steps Toward a Sign-to-Speech solution for Rwanda's Deaf and Non-Verbal Community →</a>
-            </div>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="education" class="section section-tight">
-    <div class="wrap">
-      <h2>Education</h2>
-      <div class="edu-card">
-        <div>
-          <h3>BSc in Computer Science (Software Engineering)</h3>
-          <p class="edu-org">INES-Ruhengeri, Rwanda</p>
-          <p class="edu-coursework">
-            <span>Relevant coursework</span>
-            Data Structures &amp; Algorithms, Database Systems, Operating Systems, Software Engineering, Artificial Intelligence
-          </p>
-        </div>
-        <span class="edu-date">Expected Oct 2026</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="recognition" class="section section-tight">
-    <div class="wrap">
-      <h2>Recognition</h2>
-      <ul class="recognition-list">
-        <li>
-          <div style="display:flex;align-items:flex-start;">
-            <span class="recognition-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5-9 13h6z"/></svg>
-            </span>
-            <span class="r-what">6th place, Top 10 Startups — Code for Impact 2025, Mastery Hub Rwanda, for a Kinyarwanda text-to-speech API</span>
-          </div>
-          <span class="r-when">2025</span>
-        </li>
-        <li>
-          <div style="display:flex;align-items:flex-start;">
-            <span class="recognition-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 012 2v12H5V7z"/><path d="M9 21v-2h6v2"/></svg>
-            </span>
-            <span class="r-what">AI Agents Fundamentals — Hugging Face</span>
-          </div>
-          <span class="r-when">Apr 2026</span>
-        </li>
-        <li>
-          <div style="display:flex;align-items:flex-start;">
-            <span class="recognition-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14v7"/><path d="M5 7v10"/><path d="M19 7v10"/></svg>
-            </span>
-            <span class="r-what">Workshop Facilitator, Career Development &amp; Opportunities — SSOS Rwanda</span>
-          </div>
-          <span class="r-when">Aug 2026</span>
-        </li>
-        <li>
-          <div style="display:flex;align-items:flex-start;">
-            <span class="recognition-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14v7"/><path d="M5 7v10"/><path d="M19 7v10"/></svg>
-            </span>
-            <span class="r-what">Workshop Facilitator, Generative AI &amp; Technology Fundamentals</span>
-          </div>
-          <span class="r-when">Jul 2026</span>
-        </li>
-        <li>
-          <div style="display:flex;align-items:flex-start;">
-            <span class="recognition-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 012 2v12H5V7z"/><path d="M9 21v-2h6v2"/></svg>
-            </span>
-            <span class="r-what">Appreciation Certificate — Sudanese Students Online Summit</span>
-          </div>
-          <span class="r-when">Feb 2026</span>
-        </li>
-      </ul>
     </div>
   </section>
 
@@ -1261,6 +1201,12 @@
         <div class="gallery-item">
           <img src="imgs/4.jpeg" alt="Life moment 4">
         </div>
+        <div class="gallery-item">
+          <img src="imgs/5.jpeg" alt="Life moment 5">
+        </div>
+        <div class="gallery-item">
+          <img src="imgs/6.jpeg" alt="Life moment 6">
+        </div>
       </div>
     </div>
   </section>
@@ -1268,16 +1214,24 @@
   <section id="contact" class="section contact-section">
     <div class="wrap">
       <h2>Let's talk</h2>
-      <p class="contact-lede">Open to Software Engineering and AI Engineering roles, plus research or fellowship programs. The fastest way to reach me is email.</p>
+      <p class="contact-lede">Based in Kigali, Rwanda. The fastest way to reach me is email.</p>
       <a class="contact-email" href="mailto:mozakk.io@gmail.com">mozakk.io@gmail.com</a>
       <div class="contact-links">
+        <a href="tel:+250798701484">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +250 798 701 484
+        </a>
         <a href="https://www.linkedin.com/in/mohamed-zakaria-09969b2a4/">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.850 3.370-1.850 3.601 0 4.267 2.370 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.140 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.200 24 24 23.227 24 22.271V1.729C24 .774 23.200 0 22.222 0h.003z"/></svg>
           LinkedIn
         </a>
         <a href="https://github.com/zakk-io">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           GitHub
+        </a>
+        <a href="blogs/index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+          My Articles
         </a>
       </div>
     </div>
