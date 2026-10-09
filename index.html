@@ -906,8 +906,6 @@
               <dl class="project-row">
                 <dt>Problem</dt><dd>Cloud-based ECG analysis sends sensitive heart recordings off-site to a remote server, exposing patient data outside the clinic's control.</dd>
                 <dt>Solution</dt><dd>An offline system that reads a heartbeat from a strip image and classifies it locally (~18 ms per image on one CPU core).</dd>
-                <dt>Research</dt><dd>Tested on 1,000 ECG images from the ECG5000 dataset: <strong>92.7% correct</strong>, though rare heartbeat types were often missed due to limited examples.</dd>
-                <dt>Next</dt><dd>Deploy on a microcontroller, a low-cost chip that could run inside a portable ECG device without a computer or internet.</dd>
               </dl>
             </article>
           </div>
@@ -931,8 +929,6 @@
               <dl class="project-row">
                 <dt>Problem</dt><dd>More than 158,000 Rwandans live with a visual impairment (2022 census), and leading assistive glasses (Envision, OrCam) cost $599–$4,000+ and do not support Kinyarwanda.</dd>
                 <dt>Solution</dt><dd>A system that describes a scene or reads printed text aloud in Kinyarwanda from a camera image, built by combining three existing open AI models.</dd>
-                <dt>Research</dt><dd>Chose compressed model versions to fit a small computer's memory. The working prototype took 31.5–43 s per answer in informal tests, which is far too slow for everyday use.</dd>
-                <dt>Next</dt><dd>Move it onto low-cost smart glasses (3D parts designed, not yet built) so it works offline, make it faster, and measure its quality with standard tests.</dd>
               </dl>
               <div class="video-embed">
                 <iframe src="https://www.youtube.com/embed/PjjrJgnLv74?si=WTX_MVe2WaNV8cxO" title="VisionTTS demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -950,8 +946,6 @@
               <dl class="project-row">
                 <dt>Problem</dt><dd>About 70,000 Rwandans are deaf or speech-impaired, and few people around them understand Kinyarwanda Sign Language (KSL). No public KSL dataset or tool existed.</dd>
                 <dt>Solution</dt><dd>An offline system that recognises KSL signs from a camera and speaks them in Kinyarwanda, using a tiny 6.9 KB model small enough for a low-cost wearable.</dd>
-                <dt>Research</dt><dd>Recorded 36,373 examples of 10 signs myself and trained the model on hand shape alone: <strong>~98.5% correct</strong>, likely optimistic since test and training frames came from the same recordings.</dd>
-                <dt>Next</dt><dd>Recognise signs that use movement or both hands, and fit the model into a wearable smart glove.</dd>
               </dl>
               <div class="video-embed">
                 <iframe src="https://www.youtube.com/embed/-rzLZ2ggkmw?si=F8b-JdRzTFGaJLxC" title="Kinyarwanda Sign Language recognition demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
